@@ -1,0 +1,62 @@
+# ==========================================
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# ==========================================
+# Node modules & lockfiles
+node_modules/
+**/node_modules/
+pnpm-lock.yaml
+yarn.lock
+package-lock.json
+
+# ==========================================
+# Build outputs
+dist/
+dist-ssr/
+**/dist/
+build/
+.cache/
+.next/
+out/
+
+# ==========================================
+# Env files (sensitive)
+.env
+.env.*
+!.env.example
+
+# ==========================================
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea/
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# ==========================================
+# TypeScript cache
+*.tsbuildinfo
+
+# ==========================================
+# Testing
+coverage/
+*.lcov
+.jest/
+.tmp/
+
+# ==========================================
+# Backend specific (if you generate files)
+*.sqlite
+*.db
+/uploads/

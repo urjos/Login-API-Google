@@ -10,7 +10,7 @@ lerna-debug.log*
 
 # ==========================================
 # Node modules & lockfiles
-node_modules/
+node_modules/*
 **/node_modules/
 pnpm-lock.yaml
 yarn.lock

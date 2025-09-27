@@ -60,5 +60,6 @@ export const SessionProvider = ({ children }: SessionProviderProps) => {
 export const useSession = () => {
   const ctx = useContext(SessionContext);
   if (!ctx) throw new Error("useSession must be used within SessionProvider");
+
   return ctx;
 };

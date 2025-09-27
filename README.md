@@ -160,6 +160,14 @@ Si te interesa colaborar:
 5. Abre un Pull Request describiendo qué has hecho.
 
 ---
+## Login - view
+
+<img width="1365" height="598" alt="image" src="https://github.com/user-attachments/assets/ac71f377-b6cf-419a-9e69-8aa7a0cf737a" />
+
+## Home - view
+
+<img width="1365" height="600" alt="image" src="https://github.com/user-attachments/assets/32f19eeb-af28-4959-9bce-ae652652cd5d" />
+
 
 ## 📄 Licencia
 

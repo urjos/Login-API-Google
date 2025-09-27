@@ -1,19 +1,13 @@
 {
-  "name": "escuela-it-scrapper",
-  "version": "1.0.0",
-  "private": true,
+  "name": "api-google",
+  "private": "true",
   "scripts": {
-    "install:all": "pnpm install --recursive",
-    "dev": "pnpm --parallel --filter ./packages/* run dev",
-    "dev:frontend": "pnpm --filter ./packages/frontend run dev",
-    "dev:backend": "pnpm --filter ./packages/backend run dev",
-    "build:frontend": "pnpm --filter ./packages/frontend run build",
-    "preview": "pnpm --filter ./packages/frontend run preview",
-    "start": "pnpm --filter ./packages/backend run start",
-    "lint": "pnpm --recursive run lint",
-    "clean": "pnpm --recursive run clean || true"
+    "dev": "pnpm --parallel --filter ./packages/* run dev"
   },
-  "devDependencies": {
-    "vite-tsconfig-paths": "^5.1.4"
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@react-oauth/google": "^0.12.2"
   }
 }

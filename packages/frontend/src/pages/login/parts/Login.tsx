@@ -48,7 +48,7 @@ export function Login() {
 
   return (
     <div className="flex flex-col items-center">
-      <div className="transition delay-100 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 cursor-pointer">
+      <div className="transition delay-100 duration-200 ease-in-out  hover:scale-98 cursor-pointer">
         <GoogleLogin
           onSuccess={handleLoginSuccess}
           onError={handleLoginError}

@@ -1,3 +1,4 @@
+import data from "../../../data.json";
 export default function Gallery() {
   return (
     <div className="flex justify-center w-full">
@@ -15,10 +16,10 @@ export default function Gallery() {
               {/* Texto visible al hacer hover */}
               <div className="relative z-10 flex flex-col">
                 <span className="opacity-0 group-hover:opacity-100 text-white text-lg font-semibold transition-opacity duration-300">
-                  Product
+                  {data[0].name}
                 </span>
                 <span className="opacity-0 group-hover:opacity-100 text-white text-lg font-semibold transition-opacity duration-300">
-                  Price
+                  {data[0].price}
                 </span>
               </div>
             </div>

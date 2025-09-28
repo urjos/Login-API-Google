@@ -1,0 +1,74 @@
+[
+  {
+    "id": 1,
+    "name": "Aceite Esencial 200ml",
+    "price": "$15.99",
+    "image": "https://flowbite.s3.amazonaws.com/docs/gallery/masonry/image.jpg"
+  },
+  {
+    "id": 2,
+    "name": "Crema Facial 100ml",
+    "price": "$12.50",
+    "image": "https://flowbite.s3.amazonaws.com/docs/gallery/masonry/image-1.jpg"
+  },
+  {
+    "id": 3,
+    "name": "Jabón Orgánico",
+    "price": "$7.80",
+    "image": "https://flowbite.s3.amazonaws.com/docs/gallery/masonry/image-2.jpg"
+  },
+  {
+    "id": 4,
+    "name": "Shampoo Natural 250ml",
+    "price": "$10.99",
+    "image": "https://flowbite.s3.amazonaws.com/docs/gallery/masonry/image-3.jpg"
+  },
+  {
+    "id": 5,
+    "name": "Gel Hidratante 150ml",
+    "price": "$13.20",
+    "image": "https://flowbite.s3.amazonaws.com/docs/gallery/masonry/image-4.jpg"
+  },
+  {
+    "id": 6,
+    "name": "Loción Corporal 200ml",
+    "price": "$11.99",
+    "image": "https://flowbite.s3.amazonaws.com/docs/gallery/masonry/image-5.jpg"
+  },
+  {
+    "id": 7,
+    "name": "Tónico Facial 120ml",
+    "price": "$9.50",
+    "image": "https://flowbite.s3.amazonaws.com/docs/gallery/masonry/image-6.jpg"
+  },
+  {
+    "id": 8,
+    "name": "Exfoliante Natural 100g",
+    "price": "$8.75",
+    "image": "https://flowbite.s3.amazonaws.com/docs/gallery/masonry/image-7.jpg"
+  },
+  {
+    "id": 9,
+    "name": "Bálsamo Labial",
+    "price": "$4.99",
+    "image": "https://flowbite.s3.amazonaws.com/docs/gallery/masonry/image-8.jpg"
+  },
+  {
+    "id": 10,
+    "name": "Mascarilla Facial 50g",
+    "price": "$6.99",
+    "image": "https://flowbite.s3.amazonaws.com/docs/gallery/masonry/image-9.jpg"
+  },
+  {
+    "id": 11,
+    "name": "Crema de Manos 75ml",
+    "price": "$5.99",
+    "image": "https://flowbite.s3.amazonaws.com/docs/gallery/masonry/image-10.jpg"
+  },
+  {
+    "id": 12,
+    "name": "Jabón de Carbón 90g",
+    "price": "$7.50",
+    "image": "https://flowbite.s3.amazonaws.com/docs/gallery/masonry/image-11.jpg"
+  }
+]

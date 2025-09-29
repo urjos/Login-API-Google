@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const LoginForm = () => {
   return (
     <div className="flex min-h-full flex-col justify-center px-6 py-10 lg:px-8">
@@ -8,7 +10,7 @@ const LoginForm = () => {
           className="mx-auto h-10 w-auto"
         />
         <h2 className="mt-10 text-center text-2xl/9 font-bold tracking-tight text-gray-900">
-          Sign in to your account
+          Log in to your account
         </h2>
       </div>
 
@@ -67,10 +69,20 @@ const LoginForm = () => {
               type="submit"
               className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
             >
-              Sign in
+              Log in
             </button>
           </div>
         </form>
+
+        <p className="mt-6 text-center text-sm/6 text-gray-500">
+          Don't you have an account?{" "}
+          <Link
+            to="/register"
+            className="font-semibold text-indigo-600 hover:text-indigo-500"
+          >
+            Sign in
+          </Link>
+        </p>
       </div>
     </div>
   );

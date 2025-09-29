@@ -19,7 +19,12 @@ export const RegisterForm = () => {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setError(null); // Limpiar errores previos al intentar enviar de nuevo
+    setError(null);
+
+    if (formData.password.length < 8) {
+      setError("La contraseña debe tener al menos 8 caracteres.");
+      return;
+    }
 
     if (formData.password !== formData.confirm_password) {
       setError("Las contraseñas no coinciden. Por favor, inténtalo de nuevo.");
@@ -138,9 +143,7 @@ export const RegisterForm = () => {
                 required
                 className="block w-full rounded-md bg-white px-2 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6 hover:shadow-sm transition duration-200"
               >
-                <option value="" disabled>
-                  Select a country
-                </option>
+                <option value="" disabled></option>
                 <option value="USA">United States</option>
                 <option value="Canada">Canada</option>
                 <option value="Mexico">Mexico</option>

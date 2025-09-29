@@ -175,7 +175,6 @@ export const RegisterForm = () => {
                 required
                 autoComplete="current-password"
                 placeholder="•••••••••"
-                placeholder="•••••••••"
                 className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6 hover:shadow-sm transition easy-in-out duration-200"
               />
             </div>
@@ -184,7 +183,6 @@ export const RegisterForm = () => {
           <div>
             <div className="flex items-center justify-between">
               <label
-                htmlFor="confirm_password"
                 htmlFor="confirm_password"
                 className="block text-sm/6 font-medium text-gray-900"
               >
@@ -201,7 +199,6 @@ export const RegisterForm = () => {
                 type="password"
                 required
                 autoComplete="current-password"
-                placeholder="•••••••••"
                 placeholder="•••••••••"
                 className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6 hover:shadow-sm transition easy-in-out duration-200"
               />

@@ -1,4 +1,54 @@
+import { useState, type FormEvent } from "react";
+import { useNavigate } from "react-router-dom";
+import { useSession } from "../../contexts/SessionContext";
+
 export const RegisterForm = () => {
+  const { session, setSession } = useSession();
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    name: "",
+    lastName: "",
+    email: "",
+    country: "",
+    password: "",
+    confirm_password: "",
+  });
+  const [error, setError] = useState<string | null>(null);
+
+  if (session) navigate("/");
+
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setError(null); // Limpiar errores previos al intentar enviar de nuevo
+
+    if (formData.password !== formData.confirm_password) {
+      setError("Las contraseñas no coinciden. Por favor, inténtalo de nuevo.");
+      return; // Detiene la ejecución si las contraseñas no son iguales
+    }
+
+    // Aquí iría la lógica para registrar al usuario en tu backend.
+    // Por ahora, simularemos un registro exitoso y crearemos una sesión.
+    console.log("Form data submitted:", formData);
+
+    // Simulación de creación de sesión después del registro
+    setSession({
+      name: `${formData.name} ${formData.lastName}`,
+      email: formData.email,
+      userId: `user_${Date.now()}`, // ID de usuario simulado
+      username: formData.name,
+      token: "fake-jwt-token-after-register", // Token simulado
+    });
+
+    navigate("/"); // Redirigir a la página de inicio
+  };
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
   return (
     <div className="flex min-h-full flex-col justify-center px-6 py-10 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
@@ -8,16 +58,16 @@ export const RegisterForm = () => {
           className="mx-auto h-10 w-auto"
         />
         <h2 className="mt-7 text-center text-2xl/9 font-bold tracking-tight text-gray-900">
-          Sign in to your account
+          Create your account
         </h2>
       </div>
 
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm ">
-        <form action="#" method="POST" className="space-y-3">
+        <form onSubmit={handleSubmit} className="space-y-3">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             <div className="mt-2">
               <label
-                htmlFor="email"
+                htmlFor="name"
                 className="block text-sm/6 font-medium text-gray-900"
               >
                 First Name
@@ -25,6 +75,8 @@ export const RegisterForm = () => {
               <input
                 id="name"
                 name="name"
+                value={formData.name}
+                onChange={handleChange}
                 type="text"
                 required
                 autoComplete="name"
@@ -35,7 +87,7 @@ export const RegisterForm = () => {
 
             <div className="mt-2">
               <label
-                htmlFor="email"
+                htmlFor="lastName"
                 className="block text-sm/6 font-medium text-gray-900"
               >
                 Last name
@@ -43,6 +95,8 @@ export const RegisterForm = () => {
               <input
                 id="lastName"
                 name="lastName"
+                value={formData.lastName}
+                onChange={handleChange}
                 type="text"
                 required
                 autoComplete="family-name"
@@ -61,6 +115,8 @@ export const RegisterForm = () => {
               <input
                 id="email"
                 name="email"
+                value={formData.email}
+                onChange={handleChange}
                 type="email"
                 required
                 autoComplete="email"
@@ -77,10 +133,14 @@ export const RegisterForm = () => {
               <select
                 id="country"
                 name="country"
+                value={formData.country}
+                onChange={handleChange}
                 required
                 className="block w-full rounded-md bg-white px-2 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6 hover:shadow-sm transition duration-200"
               >
-                <option disabled selected></option>
+                <option value="" disabled>
+                  Select a country
+                </option>
                 <option value="USA">United States</option>
                 <option value="Canada">Canada</option>
                 <option value="Mexico">Mexico</option>
@@ -109,6 +169,8 @@ export const RegisterForm = () => {
               <input
                 id="password"
                 name="password"
+                value={formData.password}
+                onChange={handleChange}
                 type="password"
                 required
                 autoComplete="current-password"
@@ -132,12 +194,15 @@ export const RegisterForm = () => {
               <input
                 id="confirm_password"
                 name="confirm_password"
+                value={formData.confirm_password}
+                onChange={handleChange}
                 type="password"
                 required
                 autoComplete="current-password"
                 placeholder="•••••••••"
                 className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6 hover:shadow-sm transition easy-in-out duration-200"
               />
+              {error && <p className="mt-2 text-sm text-red-600">{error}</p>}
             </div>
           </div>
 
@@ -146,7 +211,7 @@ export const RegisterForm = () => {
               type="submit"
               className="mt-5 flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 transition duration-250 cursor-pointer"
             >
-              Sign in
+              Create account
             </button>
           </div>
         </form>

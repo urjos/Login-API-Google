@@ -3,7 +3,7 @@ import { createContext, useContext, useState } from "react";
 
 type UserSession = {
   name: string;
-  picture: string;
+  picture?: string;
   email: string;
   userId: string;
   username: string;

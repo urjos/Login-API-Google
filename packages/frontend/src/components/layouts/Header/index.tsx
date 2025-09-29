@@ -35,14 +35,12 @@ export const Header = ({ onLogout }: HeaderProps) => {
 
           {/* botones login y get started */}
           <div className="flex items-center lg:order-2 gap-2">
-            {session?.picture ? (
+            {session?.picture && (
               <img
                 src={session.picture.trim()}
                 alt="profile"
                 className="w-8 h-8 rounded-full"
               />
-            ) : (
-              <span>No profile picture</span>
             )}
             <h2 className="block py-2 pr-4 pl-3 text-white text-sm rounded bg-primary-700 lg:bg-transparent lg:text-primary-700 lg:p-0 font-medium lg:flex-row lg:space-x-8 lg:mt-0 mr-3">
               Welcome, {session?.username}!

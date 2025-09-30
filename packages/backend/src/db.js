@@ -1,26 +1,18 @@
-// src/db.js
-import mysql from "mysql2/promise";
-import config from "./config.js";
+import mysql from "mysql2/promise"; // 1. Cambiar la importación
 
-// Crear un pool de conexiones
-const pool = mysql.createPool({
-  host: process.env.DB_HOST || "localhost",
-  user: process.env.DB_USER || "root",
-  password: process.env.DB_PASSWORD || "",
-  database: process.env.DB_NAME || "mi_base",
-  port: process.env.DB_PORT || 3306,
+// 2. y 3. Crear el pool de conexiones con la sintaxis de mysql2
+export const pool = mysql.createPool({
+  user: "root",
+  host: "localhost",
+  password: "",
+  database: "nodesql",
+  port: "3306",
   waitForConnections: true,
   connectionLimit: 10,
   queueLimit: 0,
 });
 
-// Probar conexión al arrancar
-try {
-  const connection = await pool.getConnection();
-  console.log("✅ Conectado a MySQL");
-  connection.release();
-} catch (err) {
-  console.error("❌ Error conectando a MySQL:", err);
-}
-
-export default pool;
+// Prueba de conexión a la DB
+/* pool.query("SELECT * FROM users").then((result) => {
+  console.log(result);
+}); */

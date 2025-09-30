@@ -28,11 +28,11 @@ export const RegisterForm = () => {
 
     if (formData.password !== formData.confirm_password) {
       setError("Las contraseñas no coinciden. Por favor, inténtalo de nuevo.");
-      return; // Detiene la ejecución si las contraseñas no son iguales
+      return;
     }
 
     // Aquí iría la lógica para registrar al usuario en tu backend.
-    // Por ahora, simularemos un registro exitoso y crearemos una sesión.
+
     console.log("Form data submitted:", formData);
 
     // Simulación de creación de sesión después del registro

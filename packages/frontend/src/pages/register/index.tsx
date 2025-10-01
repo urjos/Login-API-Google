@@ -189,7 +189,7 @@ export const RegisterForm = () => {
                 htmlFor="confirm_password"
                 className="block text-sm/6 font-medium text-gray-900"
               >
-                Confirm Password Confirm Password
+                Confirm Password
               </label>
               <div className="text-sm"></div>
             </div>

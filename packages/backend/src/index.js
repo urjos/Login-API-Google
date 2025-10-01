@@ -1,6 +1,6 @@
 import express from "express";
 import { PORT } from "./config.js";
-import userRoutes from "./routes/users.routes.js";
+import userRoutes from "./routes/users/users.routes.js";
 import "./db.js";
 
 const app = express();

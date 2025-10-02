@@ -22,8 +22,6 @@ export const RegisterForm = () => {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError(null);
-
-    // Nueva validación: verificar campos requeridos antes que nada
     const { name, lastName, email, country, password, confirm_password } =
       formData;
     if (
@@ -56,13 +54,12 @@ export const RegisterForm = () => {
         country: formData.country,
       });
 
-      // 4. Simulación de creación de sesión después del registro exitoso
-      // En un caso real, el backend debería devolver un JWT (token)
       setSession({
         name: response.data.name,
         email: response.data.email,
         userId: response.data.id,
         username: formData.name, // O podrías usar el nombre completo
+        country: response.data.country,
         token: "fake-jwt-token-after-register", // El backend debería generar y devolver esto
       });
 

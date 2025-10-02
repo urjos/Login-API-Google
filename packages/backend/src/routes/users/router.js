@@ -5,11 +5,14 @@ import {
   getUser,
   getUsers,
   updateUser,
+  loginUser,
 } from "../../controllers/users/controllers.js";
 
 const router = Router();
 
 router.get("/users", getUsers);
+
+router.post("/auth/login", loginUser);
 
 router.get("/users/:id", getUser);
 

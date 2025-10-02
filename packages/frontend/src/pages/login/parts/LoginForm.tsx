@@ -1,6 +1,55 @@
-import { Link } from "react-router-dom";
+import { useState, type FormEvent } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useSession } from "../../../contexts/SessionContext";
+import ErrorMessage from "../../../components/layouts/Error";
+import api from "../../../services/api";
 
 const LoginForm = () => {
+  const { session, setSession } = useSession();
+  const navigate = useNavigate();
+  const [error, setError] = useState<string | null>(null);
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+
+  if (session) navigate("/");
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setError(null);
+
+    if (!formData.email || !formData.password) {
+      setError("Por favor, ingresa tu email y contraseña.");
+      return;
+    }
+
+    try {
+      const response = await api.post("/auth/login", formData);
+      console.log(response);
+
+      setSession({
+        userId: response.data.id,
+        name: response.data.name,
+        email: response.data.email,
+        country: response.data.country,
+        token: response.data.token,
+      });
+
+      navigate("/"); // Redirigimos al home
+    } catch (err: any) {
+      setError(
+        err.response?.data?.message ||
+          "Credenciales incorrectas o usuario no encontrado."
+      );
+    }
+  };
+
   return (
     <div className="flex min-h-full flex-col justify-center px-6 py-10 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
@@ -15,7 +64,10 @@ const LoginForm = () => {
       </div>
 
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-        <form action="#" method="POST" className="space-y-6">
+        {error && (
+          <ErrorMessage message={error} onClose={() => setError(null)} />
+        )}
+        <form onSubmit={handleSubmit} className="space-y-6">
           <div>
             <label
               htmlFor="email"
@@ -29,6 +81,8 @@ const LoginForm = () => {
                 name="email"
                 type="email"
                 required
+                value={formData.email}
+                onChange={handleChange}
                 autoComplete="email"
                 className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
               />
@@ -58,6 +112,8 @@ const LoginForm = () => {
                 name="password"
                 type="password"
                 required
+                value={formData.password}
+                onChange={handleChange}
                 autoComplete="current-password"
                 className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
               />

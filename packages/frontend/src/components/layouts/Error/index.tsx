@@ -9,7 +9,7 @@ export default function ErrorMessage({ message, onClose }: ErrorMessageProps) {
   return (
     <div
       id="alert-2"
-      className="flex items-center p-4 mb-4 text-red-800 rounded-lg bg-red-50"
+      className="flex items-center p-2 mb-4 text-red-800 rounded-lg bg-red-50"
       role="alert"
     >
       <svg
@@ -22,11 +22,12 @@ export default function ErrorMessage({ message, onClose }: ErrorMessageProps) {
         <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
       </svg>
       <span className="sr-only">Info</span>
-      <div className="ms-3 text-sm font-medium">{message}</div>
+      <div className="ms-3 text-xs font-medium">{message}</div>
 
       <button
         type="button"
-        className="ms-auto -mx-1.5 -my-1.5 bg-red-50 text-red-500 rounded-lg focus:ring-2 focus:ring-red-400 p-1.5 hover:bg-red-200 inline-flex items-center justify-center h-8 w-8 "
+        className="ms-auto -mx-1.5 -my-1.5 bg-red-50 text-red-500 rounded-lg focus:ring-2 
+        transition easy-in-out duration-150 focus:ring-red-400 p-1.5 hover:bg-red-200 inline-flex items-center justify-center h-8 w-8 "
         aria-label="Close"
         onClick={onClose}
       >

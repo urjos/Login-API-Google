@@ -6,8 +6,9 @@ type UserSession = {
   picture?: string;
   email: string;
   userId: string;
-  username: string;
+  username?: string;
   token: string;
+  country?: string;
 } | null;
 
 type SessionContextType = {

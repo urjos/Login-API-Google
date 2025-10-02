@@ -9,7 +9,7 @@ const HomePage = () => {
   return (
     <div>
       <Header onLogout={clearSession} />
-      <Body onLogout={clearSession} />
+      <Body />
       <Footer />
     </div>
   );

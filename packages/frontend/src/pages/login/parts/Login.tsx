@@ -38,6 +38,7 @@ export function Login() {
         userId: decodedData.sub,
         username: decodedData.given_name,
         token: credentialResponse.credential,
+        country: decodedData.locale,
       });
     }
   };

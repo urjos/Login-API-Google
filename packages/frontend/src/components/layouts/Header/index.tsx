@@ -43,7 +43,7 @@ export const Header = ({ onLogout }: HeaderProps) => {
               />
             )}
             <h2 className="block py-2 pr-4 pl-3 text-white text-sm rounded bg-primary-700 lg:bg-transparent lg:text-primary-700 lg:p-0 font-medium lg:flex-row lg:space-x-8 lg:mt-0 mr-3">
-              Welcome, {session?.username}!
+              Welcome, {session?.name}!
             </h2>
             <Link
               to="../../../pages/logout/index.tsx"

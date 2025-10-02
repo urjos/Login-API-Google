@@ -14,7 +14,7 @@ export default function Table() {
             Email
           </th>
           <th scope="col" className="px-6 py-3">
-            Username
+            Country
           </th>
           <th scope="col" className="px-6 py-3">
             User ID
@@ -30,7 +30,7 @@ export default function Table() {
             {session?.name}
           </th>
           <td className="px-6 py-4">{session?.email}</td>
-          <td className="px-6 py-4">{session?.username}</td>
+          <td className="px-6 py-4">{session?.country}</td>
           <td className="px-6 py-4">{session?.userId}</td>
         </tr>
       </tbody>

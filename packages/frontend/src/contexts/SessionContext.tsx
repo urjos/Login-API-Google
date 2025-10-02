@@ -25,7 +25,6 @@ type SessionProviderProps = {
 const STORAGE_KEY = "user_session";
 
 export const SessionProvider = ({ children }: SessionProviderProps) => {
-  // ✅ inicializar directamente desde localStorage
   const [session, setSessionState] = useState<UserSession>(() => {
     try {
       const stored = localStorage.getItem(STORAGE_KEY);

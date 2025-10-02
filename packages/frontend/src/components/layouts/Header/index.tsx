@@ -185,5 +185,3 @@ export const Header = ({ onLogout }: HeaderProps) => {
     </header>
   );
 };
-
-export default Header;

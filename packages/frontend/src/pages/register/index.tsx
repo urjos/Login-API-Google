@@ -1,6 +1,8 @@
 import { useState, type FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSession } from "../../contexts/SessionContext";
+import api from "../../services/api/index"; // 1. Importar el servicio de API
+import ErrorMessage from "../../components/layouts/Error/index";
 
 export const RegisterForm = () => {
   const { session, setSession } = useSession();
@@ -17,7 +19,7 @@ export const RegisterForm = () => {
 
   if (session) navigate("/");
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError(null);
 
@@ -31,20 +33,29 @@ export const RegisterForm = () => {
       return;
     }
 
-    // Aquí iría la lógica para registrar al usuario en tu backend.
+    try {
+      const response = await api.post("/users", {
+        name: `${formData.name} ${formData.lastName}`,
+        email: formData.email,
+        password: formData.password,
+        country: formData.country,
+      });
 
-    console.log("Form data submitted:", formData);
+      // 4. Simulación de creación de sesión después del registro exitoso
+      // En un caso real, el backend debería devolver un JWT (token)
+      setSession({
+        name: response.data.name,
+        email: response.data.email,
+        userId: response.data.id,
+        username: formData.name, // O podrías usar el nombre completo
+        token: "fake-jwt-token-after-register", // El backend debería generar y devolver esto
+      });
 
-    // Simulación de creación de sesión después del registro
-    setSession({
-      name: `${formData.name} ${formData.lastName}`,
-      email: formData.email,
-      userId: `user_${Date.now()}`, // ID de usuario simulado
-      username: formData.name,
-      token: "fake-jwt-token-after-register", // Token simulado
-    });
-
-    navigate("/"); // Redirigir a la página de inicio
+      navigate("/");
+    } catch (err: any) {
+      console.error("Error during registration:", err);
+      setError(err.response?.data?.message || "Ocurrió un error inesperado.");
+    }
   };
 
   const handleChange = (
@@ -205,7 +216,7 @@ export const RegisterForm = () => {
                 placeholder="•••••••••"
                 className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6 hover:shadow-sm transition easy-in-out duration-200"
               />
-              {error && <p className="mt-2 text-sm text-red-600">{error}</p>}
+              {error && <ErrorMessage message={error} />}
             </div>
           </div>
 

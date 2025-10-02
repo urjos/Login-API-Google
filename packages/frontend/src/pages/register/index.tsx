@@ -23,6 +23,21 @@ export const RegisterForm = () => {
     e.preventDefault();
     setError(null);
 
+    // Nueva validación: verificar campos requeridos antes que nada
+    const { name, lastName, email, country, password, confirm_password } =
+      formData;
+    if (
+      !name ||
+      !lastName ||
+      !email ||
+      !country ||
+      !password ||
+      !confirm_password
+    ) {
+      setError("Por favor, completa todos los campos requeridos.");
+      return;
+    }
+
     if (formData.password.length < 8) {
       setError("La contraseña debe tener al menos 8 caracteres.");
       return;
@@ -80,6 +95,9 @@ export const RegisterForm = () => {
 
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm ">
         <form onSubmit={handleSubmit} className="space-y-3">
+          {error && (
+            <ErrorMessage message={error} onClose={() => setError(null)} />
+          )}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             <div className="mt-2">
               <label
@@ -216,7 +234,6 @@ export const RegisterForm = () => {
                 placeholder="•••••••••"
                 className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6 hover:shadow-sm transition easy-in-out duration-200"
               />
-              {error && <ErrorMessage message={error} />}
             </div>
           </div>
 

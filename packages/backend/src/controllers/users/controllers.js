@@ -1,7 +1,7 @@
-import { pool } from "../../db.js";
 import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
 import { config } from "dotenv";
+import jwt from "jsonwebtoken";
+import { pool } from "../../db.js";
 config();
 
 export const getUsers = async (req, res) => {
@@ -29,7 +29,6 @@ export const loginUser = async (req, res) => {
     const [rows] = await pool.query("SELECT * FROM users WHERE email = ?", [
       email,
     ]);
-    console.log(rows);
 
     if (rows.length === 0) {
       return res.status(401).json({ message: "Credenciales incorrectas" });

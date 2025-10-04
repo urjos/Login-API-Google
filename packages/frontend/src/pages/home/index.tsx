@@ -7,11 +7,11 @@ const HomePage = () => {
   const { clearSession } = useSession();
 
   return (
-    <div>
+    <>
       <Header onLogout={clearSession} />
       <Body />
       <Footer />
-    </div>
+    </>
   );
 };
 

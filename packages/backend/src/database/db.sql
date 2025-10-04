@@ -13,8 +13,10 @@ CREATE TABLE IF NOT EXISTS users (
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+/* Ejemplos de INSERT 
 INSERT INTO users (name, email, password, country)
 VALUES
   ('Juan Pérez', 'juan.perez@example.com', '1234abcd', 'Perú'),
   ('María Gómez', 'maria.gomez@example.com', 'abcd1234', 'México'),
   ('Carlos Fernández', 'carlos.fernandez@example.com', 'pass5678', 'Argentina');
+*/

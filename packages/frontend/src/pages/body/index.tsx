@@ -8,10 +8,8 @@ export type LogoutProps = {
 export function Body() {
   return (
     <>
-      <div className="flex items-center flex-col min-h-screen">
-        <Table />
-        <Gallery />
-      </div>
+      <Table />
+      <Gallery />
     </>
   );
 }

@@ -4,7 +4,7 @@ export default function Gallery() {
   return (
     <>
       <div className="flex justify-center w-full mt-10">
-        <div className="grid grid-cols-1 pr-5 pl-5 md:grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-5xl">
+        <div className="grid grid-cols-1 pr-5 pl-5 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-6xl">
           <div className="max-h-1/4 grid gap-4">
             {data
               .filter((item, index) => index % 3 === 0)

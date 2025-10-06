@@ -2,7 +2,7 @@ import { useState, type FormEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useSession } from "../../../contexts/SessionContext";
 import ErrorMessage from "../../../components/layouts/Error";
-import api from "../../../services/api";
+import { api } from "../../../services/api";
 
 const LoginForm = () => {
   const { session, setSession } = useSession();

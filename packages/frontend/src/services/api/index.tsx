@@ -1,7 +1,9 @@
 import axios from "axios";
 
-const api = axios.create({
+export const api = axios.create({
   baseURL: "http://localhost:4000/api",
 });
 
-export default api;
+export const avatarApi = axios.create({
+  baseURL: "https://ui-avatars.com/api/?name=",
+});

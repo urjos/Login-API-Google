@@ -29,7 +29,7 @@ export function Login() {
   const handleLoginSuccess = (credentialResponse: CredentialResponse) => {
     if (credentialResponse.credential) {
       const decodedData = jwtDecode<UserData>(credentialResponse.credential);
-      console.log(decodedData.name);
+      // console.log(decodedData.name);
 
       setSession({
         name: decodedData.name,

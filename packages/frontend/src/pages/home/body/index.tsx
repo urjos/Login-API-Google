@@ -1,5 +1,5 @@
-import Gallery from "../../components/layouts/Gallery";
-import Table from "../../components/layouts/Table";
+import Gallery from "../../../components/layouts/Gallery";
+import Table from "../../../components/layouts/Table";
 
 export type LogoutProps = {
   onLogout: () => void;

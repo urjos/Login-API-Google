@@ -11,11 +11,14 @@ export const Header = ({ onLogout }: HeaderProps) => {
   const { session } = useSession();
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
-  console.log(session?.picture);
 
   const handleLogout = () => {
-    onLogout(); // limpia la sesión
-    navigate("/login"); // redirige al login
+    onLogout();
+    navigate("/login");
+  };
+
+  const handleMenu = () => {
+    setIsOpen(!isOpen);
   };
 
   return (
@@ -36,15 +39,20 @@ export const Header = ({ onLogout }: HeaderProps) => {
           {/* botones login y get started */}
           <div className="flex items-center lg:order-2 gap-2">
             {session?.picture && (
-              <img
-                src={session.picture.trim()}
-                alt="profile"
-                className="w-8 h-8 rounded-full"
-              />
+              <Link
+                to="./index.tsx"
+                className="text-gray-800 dark:text-white 
+              font-medium rounded-lg text-sm
+              hover:scale-110 transition-transform duration-200 ease-in-out"
+                onClick={handleMenu}
+              >
+                <img
+                  src={session.picture.trim()}
+                  alt="profile"
+                  className="w-8 h-8 rounded-full"
+                />
+              </Link>
             )}
-            <h2 className="block py-2 pr-4 pl-3 text-white text-sm rounded bg-primary-700 lg:bg-transparent lg:text-primary-700 lg:p-0 font-medium lg:flex-row lg:space-x-8 lg:mt-0 mr-3">
-              Welcome, {session?.name}!
-            </h2>
             <Link
               to="../../../pages/logout/index.tsx"
               className="text-gray-800 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 

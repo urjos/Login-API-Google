@@ -1,6 +1,5 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { useSession } from "../../../contexts/SessionContext";
 
 export type HeaderProps = {
@@ -12,6 +11,12 @@ export const Header = ({ onLogout }: HeaderProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
 
+  // Pregunta si el objeto session no es null, y se ejecuta cualquier de los dos valores si uno es verdadero. Luego dentro de la url evalua si existe un name, sino asigna un default user como respaldo
+  const avatarImg = session
+    ? session.picture ||
+      `https://ui-avatars.com/api/?name=${session.name || "Default User"}`
+    : null;
+
   const handleLogout = () => {
     onLogout();
     navigate("/login");
@@ -20,6 +25,25 @@ export const Header = ({ onLogout }: HeaderProps) => {
   const handleMenu = () => {
     setIsOpen(!isOpen);
   };
+
+  // Opcional: Logs para depuración, como pediste en el ejemplo.
+  /*useEffect(() => {
+    if (session) {
+      console.log("Sesión activa:", session);
+      if (session.picture) {
+        console.log("Usando imagen de Google:", session.picture);
+      } else {
+        console.log("No hay imagen de Google, se generará una.");
+      }
+      const generatedAvatarUrl = `https://ui-avatars.com/api/?name=${
+        session.name || "Default User"
+      }`;
+      console.log("URL de avatar generada:", generatedAvatarUrl);
+      console.log("URL final para el <img> (avatarSrc):", avatarSrc);
+    } else {
+      console.log("No hay sesión activa.");
+    }
+  }, [session, avatarSrc]);*/
 
   return (
     <header>
@@ -36,9 +60,8 @@ export const Header = ({ onLogout }: HeaderProps) => {
             </span>
           </Link>
 
-          {/* botones login y get started */}
           <div className="flex items-center lg:order-2 gap-2">
-            {session?.picture && (
+            {avatarImg && (
               <Link
                 to="./index.tsx"
                 className="text-gray-800 dark:text-white 
@@ -47,21 +70,21 @@ export const Header = ({ onLogout }: HeaderProps) => {
                 onClick={handleMenu}
               >
                 <img
-                  src={session.picture.trim()}
+                  src={avatarImg}
                   alt="profile"
                   className="w-8 h-8 rounded-full"
                 />
               </Link>
             )}
-            <Link
-              to="../../../pages/logout/index.tsx"
+            <button
+              type="button"
               className="text-gray-800 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 
               font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 
               dark:hover:bg-gray-600 focus:outline-none dark:focus:ring-gray-800"
               onClick={handleLogout}
             >
               Log out
-            </Link>
+            </button>
             {/* toggle menu mobile */}
             <button
               type="button"

@@ -22,28 +22,9 @@ export const Header = ({ onLogout }: HeaderProps) => {
     navigate("/login");
   };
 
-  const handleMenu = () => {
-    setIsOpen(!isOpen);
+  const handleProfile = () => {
+    navigate("/profile");
   };
-
-  // Opcional: Logs para depuración, como pediste en el ejemplo.
-  /*useEffect(() => {
-    if (session) {
-      console.log("Sesión activa:", session);
-      if (session.picture) {
-        console.log("Usando imagen de Google:", session.picture);
-      } else {
-        console.log("No hay imagen de Google, se generará una.");
-      }
-      const generatedAvatarUrl = `https://ui-avatars.com/api/?name=${
-        session.name || "Default User"
-      }`;
-      console.log("URL de avatar generada:", generatedAvatarUrl);
-      console.log("URL final para el <img> (avatarSrc):", avatarSrc);
-    } else {
-      console.log("No hay sesión activa.");
-    }
-  }, [session, avatarSrc]);*/
 
   return (
     <header>
@@ -63,11 +44,11 @@ export const Header = ({ onLogout }: HeaderProps) => {
           <div className="flex items-center lg:order-2 gap-2">
             {avatarImg && (
               <Link
-                to="./index.tsx"
+                to="/profile"
                 className="text-gray-800 dark:text-white 
               font-medium rounded-lg text-sm
               hover:scale-110 transition-transform duration-200 ease-in-out"
-                onClick={handleMenu}
+                onClick={handleProfile}
               >
                 <img
                   src={avatarImg}
@@ -85,7 +66,6 @@ export const Header = ({ onLogout }: HeaderProps) => {
             >
               Log out
             </button>
-            {/* toggle menu mobile */}
             <button
               type="button"
               className="inline-flex items-center p-2 ml-1 text-sm text-gray-500 rounded-lg lg:hidden 

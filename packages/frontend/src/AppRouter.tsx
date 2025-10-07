@@ -4,6 +4,7 @@ import HomePage from "./pages/home";
 import LoginPage from "./pages/login";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import { RegisterForm } from "./pages/register";
+import { Profile } from "./pages/profile";
 
 const routes = createBrowserRouter([
   {
@@ -11,8 +12,11 @@ const routes = createBrowserRouter([
     element: <App />,
     children: [
       {
-        element: <ProtectedRoute />, // protege todas las rutas internas
-        children: [{ index: true, element: <HomePage /> }],
+        element: <ProtectedRoute />,
+        children: [
+          { index: true, element: <HomePage /> },
+          { path: "profile", element: <Profile /> },
+        ],
       },
       {
         path: "login",

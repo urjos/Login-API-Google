@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 
 type UserSession = {
   name: string;
@@ -50,6 +50,21 @@ export const SessionProvider = ({ children }: SessionProviderProps) => {
     localStorage.removeItem(STORAGE_KEY);
   };
 
+  // Efecto para sincronizar el estado entre pestañas/ventanas
+  useEffect(() => {
+    const handleStorageChange = (event: StorageEvent) => {
+      if (event.key === STORAGE_KEY) {
+        try {
+          setSessionState(event.newValue ? JSON.parse(event.newValue) : null);
+        } catch {
+          setSessionState(null);
+        }
+      }
+    };
+
+    window.addEventListener("storage", handleStorageChange);
+    return () => window.removeEventListener("storage", handleStorageChange);
+  }, []);
   return (
     <SessionContext.Provider value={{ session, setSession, clearSession }}>
       {children}

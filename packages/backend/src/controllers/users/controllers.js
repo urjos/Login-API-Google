@@ -36,13 +36,11 @@ export const loginUser = async (req, res) => {
 
     const user = rows[0];
 
-    // 2. Comparar la contraseña enviada con el hash de la BD
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
       return res.status(401).json({ message: "Credenciales incorrectas" });
     }
 
-    // 3. Crear y firmar un JWT
     const payload = { id: user.id, name: user.name };
     const token = jwt.sign(
       payload,
@@ -69,7 +67,6 @@ export const createUser = async (req, res) => {
   try {
     const { name, email, password, country } = req.body;
 
-    // Hashear la contraseña antes de guardarla
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
@@ -77,8 +74,6 @@ export const createUser = async (req, res) => {
       "INSERT INTO users (name, email, password, country) VALUES (?, ?, ?, ?)",
       [name, email, hashedPassword, country]
     );
-
-    // No devolver la contraseña en la respuesta
     return res.status(201).json({
       id: result.insertId,
       name,
@@ -107,15 +102,24 @@ export const deleteUser = async (req, res) => {
 export const updateUser = async (req, res) => {
   const { id } = req.params;
   const data = req.body;
-
-  const result = await pool.query("UPDATE users SET ? WHERE id = ?", [
-    data,
-    id,
-  ]);
-
-  if (result[0].affectedRows === 0) {
-    return res.status(404).json({ message: "Not updated" });
-  } else {
-    return res.sendStatus(204).json({ message: "User updated successfully" });
+  try {
+    if (data.password) {
+      const salt = await bcrypt.genSalt(10);
+      data.password = await bcrypt.hash(data.password, salt);
+    }
+    const [result] = await pool.query("UPDATE users SET ? WHERE id = ?", [
+      data,
+      id,
+    ]);
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    const [rows] = await pool.query(
+      "SELECT id, name, email, country FROM users WHERE id = ?",
+      [id]
+    );
+    return res.json(rows[0]);
+  } catch (error) {
+    return res.status(500).json({ message: "Error interno del servidor" });
   }
 };

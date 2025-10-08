@@ -1,4 +1,4 @@
-import { useState, type ChangeEvent, type FormEvent } from "react";
+import { useState, type FormEvent } from "react";
 import { useSession } from "../../../contexts/SessionContext";
 import { api } from "../../../services/api";
 import ErrorMessage from "../../../components/layouts/Error";

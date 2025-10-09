@@ -1,6 +1,6 @@
 import { useSession } from "../../../contexts/SessionContext";
 
-export default function Table() {
+export const Table = () => {
   const { session } = useSession();
 
   // Aseguramos que la sesión exista antes de intentar renderizar los datos.
@@ -14,7 +14,7 @@ export default function Table() {
 
   return (
     <div className="pr-10 pl-10">
-      <div className="max-w-2xl mx-auto mt-10 relative overflow-x-auto shadow-md sm:rounded-lg">
+      <div className="max-w-min mx-auto mt-10 relative overflow-x-auto shadow-md sm:rounded-lg">
         <table className="w-full text-sm text-left rtl:text-right text-gray-500">
           <thead className="text-xs text-gray-700 uppercase bg-gray-50">
             <tr>
@@ -49,4 +49,4 @@ export default function Table() {
       </div>
     </div>
   );
-}
+};

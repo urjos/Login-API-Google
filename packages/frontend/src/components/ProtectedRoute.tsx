@@ -5,7 +5,7 @@ export function ProtectedRoute() {
   const { session, isLoading } = useSession();
 
   if (isLoading) {
-    return <div>Loading session...</div>; // O un componente de Spinner/Loader
+    return <div>Loading session...</div>;
   }
 
   if (!session) {

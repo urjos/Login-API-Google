@@ -1,5 +1,5 @@
-import Footer from "../../components/layouts/Footer";
-import { Header } from "../../components/layouts/Header";
+import { Footer } from "../../components/layouts/AppLayout/Footer";
+import { Header } from "../../components/layouts/AppLayout/Header";
 import { useSession } from "../../contexts/SessionContext";
 import { Body } from "./body";
 

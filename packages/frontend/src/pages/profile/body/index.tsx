@@ -1,8 +1,8 @@
 import { useState, type FormEvent } from "react";
 import { useSession } from "../../../contexts/SessionContext";
 import { api } from "../../../services/api";
-import ErrorMessage from "../../../components/layouts/Error";
-import SuccessMessage from "../../../components/layouts/Success";
+import ErrorMessage from "../../../components/layouts/Notifications/Error";
+import SuccessMessage from "../../../components/layouts/Notifications/Success";
 
 export const ProfileBody = () => {
   const { session, setSession } = useSession();
@@ -102,12 +102,11 @@ export const ProfileBody = () => {
                   type="text"
                   required
                   autoComplete="name"
-                  className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-800 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6
-                        hover:shadow-sm transition easy-in-out duration-200"
+                  className="mt-1 block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-800 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6 hover:shadow-sm transition easy-in-out duration-200"
                 />
               </div>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+            <div className="max-h-full grid grid-cols-1 md:grid-cols-3 gap-0 md:gap-5">
               <div className="mt-2 col-span-2">
                 <label
                   htmlFor="email"
@@ -123,10 +122,10 @@ export const ProfileBody = () => {
                   type="email"
                   required
                   autoComplete="email"
-                  className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-800 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6 hover:shadow-sm transition easy-in-out duration-200"
+                  className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-800 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6 hover:shadow-sm transition easy-in-out duration-200 mt-1"
                 />
               </div>
-              <div className="mt-2 col-span-1">
+              <div className="mt-2 col-span-2 sm:col-span-1">
                 <label
                   htmlFor="country"
                   className="block text-sm/6 font-medium text-gray-900"
@@ -140,7 +139,7 @@ export const ProfileBody = () => {
                   onChange={handleChange}
                   autoComplete="country"
                   required
-                  className="block w-full rounded-md bg-white px-2 py-1.5 text-base text-gray-800 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6 hover:shadow-sm transition duration-200"
+                  className="mt-1 block w-full rounded-md bg-white px-2 py-2 text-base text-gray-800 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6 hover:shadow-sm transition duration-200"
                 >
                   <option value="" disabled></option>
                   <option value="USA">United States</option>
@@ -157,7 +156,7 @@ export const ProfileBody = () => {
               </div>
             </div>
 
-            <div>
+            <div className="mt-2">
               <div className="flex items-center justify-between">
                 <label
                   htmlFor="password"
@@ -167,7 +166,7 @@ export const ProfileBody = () => {
                 </label>
                 <div className="text-sm"></div>
               </div>
-              <div className="mt-2">
+              <div className="mt-1">
                 <input
                   id="password"
                   name="password"
@@ -181,7 +180,7 @@ export const ProfileBody = () => {
               </div>
             </div>
 
-            <div>
+            <div className="mt-2">
               <div className="flex items-center justify-between">
                 <label
                   htmlFor="confirm_password"
@@ -191,7 +190,7 @@ export const ProfileBody = () => {
                 </label>
                 <div className="text-sm"></div>
               </div>
-              <div className="mt-2">
+              <div className="mt-1">
                 <input
                   id="confirm_password"
                   name="confirm_password"

@@ -1,7 +1,7 @@
 import { useState, type FormEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useSession } from "../../../contexts/SessionContext";
-import ErrorMessage from "../../../components/layouts/Error";
+import ErrorMessage from "../../../components/layouts/Notifications/Error";
 import { api } from "../../../services/api";
 
 const LoginForm = () => {
@@ -24,11 +24,6 @@ const LoginForm = () => {
     e.preventDefault();
     setError(null);
 
-    if (!formData.email || !formData.password) {
-      setError("Por favor, ingresa tu email y contraseña.");
-      return;
-    }
-
     try {
       const response = await api.post("/auth/login", formData);
       console.log(response);
@@ -41,7 +36,7 @@ const LoginForm = () => {
         token: response.data.token,
       });
 
-      navigate("/"); // Redirigimos al home
+      navigate("/");
     } catch (err: any) {
       setError(
         err.response?.data?.message ||

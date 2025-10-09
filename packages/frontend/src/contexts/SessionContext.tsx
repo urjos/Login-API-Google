@@ -1,6 +1,7 @@
 import {
   createContext,
   useContext,
+  useRef,
   useState,
   useMemo,
   useEffect,
@@ -21,12 +22,14 @@ type SessionContextType = {
   session: Session | null;
   setSession: (session: Session | null) => void;
   clearSession: () => void;
+  wasSessionActive: boolean;
   isLoading: boolean;
 };
 
 const SessionContext = createContext<SessionContextType | undefined>(undefined);
 
 export const SessionProvider = ({ children }: { children: ReactNode }) => {
+  const sessionRef = useRef<Session | null>(null);
   const [session, setSessionState] = useState<Session | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -35,6 +38,7 @@ export const SessionProvider = ({ children }: { children: ReactNode }) => {
       const storedSession = localStorage.getItem("session");
       if (storedSession) {
         setSessionState(JSON.parse(storedSession));
+        sessionRef.current = JSON.parse(storedSession);
       }
     } catch (error) {
       console.error("Failed to parse session from localStorage", error);
@@ -45,6 +49,7 @@ export const SessionProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   const setSession = (newSession: Session | null) => {
+    sessionRef.current = session; // Guardamos el estado anterior
     setSessionState(newSession);
     if (newSession) {
       localStorage.setItem("session", JSON.stringify(newSession));
@@ -55,9 +60,12 @@ export const SessionProvider = ({ children }: { children: ReactNode }) => {
 
   const clearSession = () => setSession(null);
 
+  // Indica si hubo una sesión en algún momento antes del renderizado actual
+  const wasSessionActive = !!sessionRef.current;
+
   const value = useMemo(
-    () => ({ session, setSession, clearSession, isLoading }),
-    [session, isLoading]
+    () => ({ session, setSession, clearSession, isLoading, wasSessionActive }),
+    [session, isLoading, wasSessionActive]
   );
 
   return (

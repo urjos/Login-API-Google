@@ -1,15 +1,27 @@
-export type ErrorMessageProps = {
+import { useEffect } from "react";
+
+export type SuccessMessageProps = {
   message: string | null;
   onClose: () => void;
 };
 
-export default function ErrorMessage({ message, onClose }: ErrorMessageProps) {
+export default function SuccessMessage({
+  message,
+  onClose,
+}: SuccessMessageProps) {
   if (!message) return null;
-
+  useEffect(() => {
+    if (message) {
+      const timer = setTimeout(() => {
+        onClose();
+      }, 2000);
+      return () => clearTimeout(timer);
+    }
+  }, [message, onClose]);
   return (
     <div
       id="alert-2"
-      className="flex items-center p-2 mb-4 text-red-800 rounded-lg bg-red-50"
+      className="flex items-center p-2 text-green-800 rounded-lg bg-green-50"
       role="alert"
     >
       <svg
@@ -26,8 +38,8 @@ export default function ErrorMessage({ message, onClose }: ErrorMessageProps) {
 
       <button
         type="button"
-        className="ms-auto -mx-1.5 -my-1.5 bg-red-50 text-red-500 rounded-lg focus:ring-2 
-        transition easy-in-out duration-150 focus:ring-red-400 p-1.5 hover:bg-red-200 inline-flex items-center justify-center h-8 w-8 "
+        className="ms-auto -mx-1.5 -my-1.5 bg-green-50 text-green-500 rounded-lg focus:ring-2 
+        transition easy-in-out duration-150 focus:ring-green-400 p-1.5 hover:bg-green-200 inline-flex items-center justify-center h-8 w-8"
         aria-label="Close"
         onClick={onClose}
       >

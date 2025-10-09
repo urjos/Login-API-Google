@@ -1,6 +1,6 @@
-import Footer from "../../components/layouts/Footer";
-import { Header } from "../../components/layouts/Header";
-import Table from "../../components/layouts/Table";
+import { DeleteUser } from "../../components/layouts/DeleteAccount";
+import { Footer } from "../../components/layouts/AppLayout/Footer";
+import { Header } from "../../components/layouts/AppLayout/Header";
 import { useSession } from "../../contexts/SessionContext";
 import { ProfileBody } from "./body";
 
@@ -10,7 +10,7 @@ export const Profile = () => {
     <>
       <Header onLogout={clearSession} />
       <ProfileBody />
-      <Table />
+      <DeleteUser />
       <Footer />
     </>
   );

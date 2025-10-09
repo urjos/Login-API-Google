@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useSession } from "../../../contexts/SessionContext";
+import { useSession } from "../../../../contexts/SessionContext";
 
 export type HeaderProps = {
   onLogout: () => void;
@@ -112,7 +112,6 @@ export const Header = ({ onLogout }: HeaderProps) => {
             </button>
           </div>
 
-          {/* menu links */}
           <div
             className={`${
               isOpen ? "block" : "hidden"

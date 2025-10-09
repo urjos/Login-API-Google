@@ -31,7 +31,7 @@ export const loginUser = async (req, res) => {
     ]);
 
     if (rows.length === 0) {
-      return res.status(401).json({ message: "Credenciales incorrectas" });
+      return res.status(401).json({ message: "El email no está registrado" });
     }
 
     const user = rows[0];
@@ -95,7 +95,7 @@ export const deleteUser = async (req, res) => {
   if (result[0].affectedRows === 0) {
     return res.status(404).json({ message: "User not found" });
   } else {
-    return res.sendStatus(204).json({ message: "User deleted successfully" });
+    return res.status(204).json({ message: "User deleted successfully" });
   }
 };
 

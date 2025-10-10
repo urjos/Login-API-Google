@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useSession } from "../../../../contexts/SessionContext";
 
@@ -11,7 +11,6 @@ export const Header = ({ onLogout }: HeaderProps) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const navigate = useNavigate();
-  // Pregunta si el objeto session no es null, y se ejecuta cualquier de los dos valores si uno es verdadero. Luego dentro de la url evalua si existe un name, sino asigna un default user como respaldo
   const avatarImg = session
     ? session.picture ||
       `https://ui-avatars.com/api/?name=${session.name || "Default User"}`
@@ -24,7 +23,7 @@ export const Header = ({ onLogout }: HeaderProps) => {
 
   return (
     <header>
-      <nav className="sticky top-0 z-50 bg-whiteorder-gray-200 px-4 lg:px-8 py-2 bg-gray-700">
+      <nav className="sticky top-0 z-50 bg-whiteorder-gray-200 px-4 lg:px-8 py-2.5 bg-gray-700">
         <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
           <Link to="/" className="flex items-center">
             <img

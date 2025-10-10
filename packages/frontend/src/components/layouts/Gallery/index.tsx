@@ -3,7 +3,7 @@ import data from "../../../data.json";
 export default function Gallery() {
   return (
     <>
-      <div className="flex justify-center w-full mt-20">
+      <div className="flex justify-center w-full mt-10">
         <div className="grid grid-cols-1 pr-5 pl-5 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-4xl">
           <div className="max-h-1/4 grid gap-4">
             {data
@@ -34,7 +34,7 @@ export default function Gallery() {
                 </>
               ))}
           </div>
-          <div className="max-h-1/4 grid gap-4 pr-5 pl-5 md:pr-0 md:pl-0 sm:pl-0 sm:pr-0">
+          <div className="max-h-1/4 grid gap-4">
             {data
               .filter((item, index) => index % 3 === 1)
               .map((item) => (
@@ -63,7 +63,7 @@ export default function Gallery() {
                 </>
               ))}
           </div>
-          <div className="max-h-1/4 grid gap-4 pr-5 pl-5 md:pr-0 md:pl-0 sm:pl-0 sm:pr-0">
+          <div className="max-h-1/4 grid gap-4">
             {data
               .filter((item, index) => index % 3 === 2)
               .map((item) => (

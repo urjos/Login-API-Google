@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useSession } from "../../../../contexts/SessionContext";
 
@@ -8,9 +8,9 @@ export type HeaderProps = {
 
 export const Header = ({ onLogout }: HeaderProps) => {
   const { session } = useSession();
-  const [isOpen, setIsOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const navigate = useNavigate();
-
   // Pregunta si el objeto session no es null, y se ejecuta cualquier de los dos valores si uno es verdadero. Luego dentro de la url evalua si existe un name, sino asigna un default user como respaldo
   const avatarImg = session
     ? session.picture ||
@@ -22,13 +22,9 @@ export const Header = ({ onLogout }: HeaderProps) => {
     navigate("/login");
   };
 
-  const handleProfile = () => {
-    navigate("/profile");
-  };
-
   return (
     <header>
-      <nav className="bg-white border-gray-200 px-4 lg:px-8 py-2.5 dark:bg-gray-700">
+      <nav className="sticky top-0 z-50 bg-whiteorder-gray-200 px-4 lg:px-8 py-2 bg-gray-700">
         <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
           <Link to="/" className="flex items-center">
             <img
@@ -41,40 +37,59 @@ export const Header = ({ onLogout }: HeaderProps) => {
             </span>
           </Link>
 
-          <div className="flex items-center lg:order-2 gap-2">
+          <div className="flex items-center lg:order-2 gap-3">
             {avatarImg && (
-              <Link
-                to="/profile"
-                className="text-gray-800 dark:text-white 
-              font-medium rounded-lg text-sm
-              hover:scale-110 transition-transform duration-200 ease-in-out"
-                onClick={handleProfile}
-              >
-                <img
-                  src={avatarImg}
-                  alt="profile"
-                  className="w-8 h-8 rounded-full"
-                />
-              </Link>
+              <div className="relative">
+                <button
+                  type="button"
+                  onClick={() => setIsDropdownOpen((prev) => !prev)}
+                  className={`flex text-sm bg-gray-800 rounded-full hover:scale-110 ease-in-out duration-200 hover:cursor-pointer 
+                    ${
+                      isDropdownOpen &&
+                      "scale-110 focus:ring-4 focus:ring-gray-600"
+                    }
+                    ${!isDropdownOpen && "focus:ring-0 focus:ring-gray-600"}
+                    `}
+                >
+                  <span className="sr-only">Open user menu</span>
+                  <img
+                    className="w-8 h-8 rounded-full"
+                    src={avatarImg}
+                    alt="user photo"
+                  />
+                </button>
+                {isDropdownOpen && (
+                  <div className="absolute left-0 origin-top-left mt-3 w-35 bg-white shadow-md ring-1 ring-gray-300 ring-opacity-50 border-0 ring-opacity-5 focus:outline-none z-50 hover:cursor-pointer">
+                    <Link
+                      to="/profile"
+                      className="block px-4 py-2 text-xs text-gray-700 hover:bg-gray-100 min-h-max hover:rounded-md"
+                    >
+                      Your Profile
+                    </Link>
+                    <button
+                      onClick={handleLogout}
+                      className="block w-full text-left px-4 py-2 text-xs text-gray-700 hover:bg-gray-100 hover:rounded-md hover:cursor-pointer"
+                    >
+                      Sign out
+                    </button>
+                  </div>
+                )}
+              </div>
             )}
-            <button
-              type="button"
-              className="text-gray-800 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 
-              font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 
-              dark:hover:bg-gray-600 focus:outline-none dark:focus:ring-gray-800"
-              onClick={handleLogout}
-            >
-              Log out
-            </button>
+            <div className="hidden lg:flex flex-col items-start text-xs text-white">
+              <p>Welcolme,</p>
+              <p>{session?.name}</p>
+            </div>
+
             <button
               type="button"
               className="inline-flex items-center p-2 ml-1 text-sm text-gray-500 rounded-lg lg:hidden 
               hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 
               dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-              onClick={() => setIsOpen(!isOpen)}
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             >
               <span className="sr-only">Open main menu</span>
-              {isOpen ? (
+              {isMobileMenuOpen ? (
                 <svg
                   className="w-6 h-6"
                   fill="currentColor"
@@ -114,7 +129,7 @@ export const Header = ({ onLogout }: HeaderProps) => {
 
           <div
             className={`${
-              isOpen ? "block" : "hidden"
+              isMobileMenuOpen ? "block" : "hidden"
             } justify-between items-center w-full lg:flex lg:w-auto lg:order-1`}
           >
             <ul className="flex flex-col mt-4 font-medium lg:flex-row lg:space-x-8 lg:mt-0">

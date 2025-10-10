@@ -38,7 +38,7 @@ export const loginUser = async (req, res) => {
 
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      return res.status(401).json({ message: "Credenciales incorrectas" });
+      return res.status(401).json({ message: "Contraseña incorrecta" });
     }
 
     const payload = { id: user.id, name: user.name };

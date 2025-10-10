@@ -4,6 +4,9 @@ import { useSession } from "../../../contexts/SessionContext";
 import ErrorMessage from "../../../components/layouts/Notifications/Error";
 import { api } from "../../../services/api";
 
+const EMAIL_ERROR_MESSAGE = "El email no está registrado";
+const PASSWORD_ERROR_MESSAGE = "Contraseña incorrecta";
+
 const LoginForm = () => {
   const { session, setSession } = useSession();
   const navigate = useNavigate();
@@ -40,7 +43,8 @@ const LoginForm = () => {
     } catch (err: any) {
       setError(
         err.response?.data?.message ||
-          "Credenciales incorrectas o usuario no encontrado."
+          EMAIL_ERROR_MESSAGE ||
+          PASSWORD_ERROR_MESSAGE
       );
     }
   };
@@ -79,7 +83,11 @@ const LoginForm = () => {
                 value={formData.email}
                 onChange={handleChange}
                 autoComplete="email"
-                className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                className={`block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1  placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2  sm:text-sm/6 ${
+                  error === EMAIL_ERROR_MESSAGE
+                    ? "outline-red-500 outline-2 focus:outline-red-500"
+                    : "outline-gray-300 focus:outline-indigo-600"
+                }`}
               />
             </div>
           </div>
@@ -110,7 +118,11 @@ const LoginForm = () => {
                 value={formData.password}
                 onChange={handleChange}
                 autoComplete="current-password"
-                className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                className={`block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 sm:text-sm/6 ${
+                  error === PASSWORD_ERROR_MESSAGE
+                    ? "outline-red-500 outline-2 focus:outline-red-500"
+                    : "outline-gray-300 focus:outline-indigo-600"
+                }`}
               />
             </div>
           </div>

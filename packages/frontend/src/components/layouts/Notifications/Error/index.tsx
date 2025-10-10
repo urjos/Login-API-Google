@@ -11,7 +11,7 @@ export default function ErrorMessage({ message, onClose }: ErrorMessageProps) {
     if (message) {
       const timer = setTimeout(() => {
         onClose();
-      }, 2000);
+      }, 3000);
       return () => clearTimeout(timer);
     }
   }, [message, onClose]);

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useSession } from "../../../../contexts/SessionContext";
 
@@ -10,6 +10,17 @@ export const Header = ({ onLogout }: HeaderProps) => {
   const { session } = useSession();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isLargeScreen, setisLargeScreen] = useState(window.innerWidth >= 1024);
+  useEffect(() => {
+    const handleResize = () => {
+      setisLargeScreen(window.innerWidth >= 1024);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
   const navigate = useNavigate();
   const avatarImg = session
     ? session.picture ||
@@ -41,12 +52,14 @@ export const Header = ({ onLogout }: HeaderProps) => {
               <div className="relative">
                 <button
                   type="button"
-                  onClick={() => setIsDropdownOpen((prev) => !prev)}
+                  onClick={() =>
+                    isLargeScreen && setIsDropdownOpen((prev) => !prev)
+                  }
                   className={`flex text-sm bg-gray-800 rounded-full hover:scale-110 ease-in-out duration-200 hover:cursor-pointer 
                     ${
                       isDropdownOpen &&
                       "scale-110 focus:ring-4 focus:ring-gray-600"
-                    }
+                    } 
                     ${!isDropdownOpen && "focus:ring-0 focus:ring-gray-600"}
                     `}
                 >
@@ -131,7 +144,7 @@ export const Header = ({ onLogout }: HeaderProps) => {
               isMobileMenuOpen ? "block" : "hidden"
             } justify-between items-center w-full lg:flex lg:w-auto lg:order-1`}
           >
-            <ul className="flex flex-col mt-4 font-medium lg:flex-row lg:space-x-8 lg:mt-0">
+            <ul className="flex flex-col mt-4 font-medium lg:flex-row lg:gap-10 lg:mt-0">
               <li>
                 <Link
                   to="/"
@@ -201,6 +214,22 @@ export const Header = ({ onLogout }: HeaderProps) => {
                 >
                   Contact
                 </Link>
+              </li>
+              <li className="block lg:hidden">
+                <Link
+                  to="/profile"
+                  className="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:border-gray-700"
+                >
+                  Profile
+                </Link>
+              </li>
+              <li className="block lg:hidden">
+                <button
+                  onClick={handleLogout}
+                  className="block w-1/4 mx-auto text-center py-2 px-4 rounded-md border border-gray-300 text-gray-700 hover:border-indigo-500 hover:bg-indigo-50 dark:text-gray-400 dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:text-white dark:hover:border-indigo-400 transition-colors duration-300"
+                >
+                  Sign out
+                </button>
               </li>
             </ul>
           </div>

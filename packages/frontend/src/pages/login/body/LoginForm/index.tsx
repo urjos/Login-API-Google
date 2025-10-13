@@ -1,8 +1,8 @@
 import { useState, type FormEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useSession } from "../../../contexts/SessionContext";
-import ErrorMessage from "../../../components/layouts/Notifications/Error";
-import { api } from "../../../services/api";
+import { useSession } from "../../../../contexts/SessionContext";
+import { api } from "../../../../services/api";
+import ErrorMessage from "../../../../components/layouts/Notifications/Error";
 
 const EMAIL_ERROR_MESSAGE = "El email no está registrado";
 const PASSWORD_ERROR_MESSAGE = "Contraseña incorrecta";

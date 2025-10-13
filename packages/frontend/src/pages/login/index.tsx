@@ -1,11 +1,11 @@
-import { Login } from "./parts/Login";
-import LoginForm from "./parts/LoginForm";
+import { AuthGoogle } from "../login/body/AuthGoogle";
+import LoginForm from "../login/body/LoginForm";
 
 const LoginPage = () => {
   return (
     <>
       <LoginForm />
-      <Login />
+      <AuthGoogle />
     </>
   );
 };

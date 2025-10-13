@@ -1,4 +1,4 @@
-import { useSession } from "../../../contexts/SessionContext";
+import { useSession } from "../../../../contexts/SessionContext";
 import { GoogleLogin, type CredentialResponse } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode";
 import { useNavigate } from "react-router-dom";
@@ -20,7 +20,7 @@ export type UserData = {
   jti: string;
 };
 
-export function Login() {
+export function AuthGoogle() {
   const { session, setSession, clearSession } = useSession();
   const navigate = useNavigate();
 

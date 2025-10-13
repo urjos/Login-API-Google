@@ -1,8 +1,9 @@
 import { useState, type FormEvent } from "react";
-import { useSession } from "../../../contexts/SessionContext";
-import { api } from "../../../services/api";
-import ErrorMessage from "../../../components/layouts/Notifications/Error";
-import SuccessMessage from "../../../components/layouts/Notifications/Success";
+import { useSession } from "../../../../contexts/SessionContext";
+import { api } from "../../../../services/api";
+import ErrorMessage from "../../../../components/layouts/Notifications/Error";
+import SuccessMessage from "../../../../components/layouts/Notifications/Success";
+import { Divider } from "../../../../components/layouts/Others/Divider";
 
 export const ProfileBody = () => {
   const { session, setSession } = useSession();
@@ -74,8 +75,9 @@ export const ProfileBody = () => {
 
   return (
     <>
-      <div className="flex min-h-full flex-col justify-center px-6 lg:px-8">
-        <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm ">
+      <div className="flex min-h-full flex-col justify-center pt-8 px-6 lg:px-8">
+        <Divider />
+        <div className="sm:mx-auto sm:w-full sm:max-w-sm ">
           <form onSubmit={handleSubmit}>
             {error && (
               <ErrorMessage message={error} onClose={() => setError(null)} />

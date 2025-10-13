@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
-import { useSession } from "../../../contexts/SessionContext";
-import { api } from "../../../services/api";
+import { useSession } from "../../../../contexts/SessionContext";
+import { api } from "../../../../services/api";
 import { useNavigate } from "react-router-dom";
-import { DeleteNotification } from "../Notifications/Delete";
+import { DeleteNotification } from "../../../../components/layouts/Notifications/Delete";
+import { Divider } from "../../../../components/layouts/Others/Divider";
 
 export const DeleteUser = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -35,8 +36,8 @@ export const DeleteUser = () => {
 
   return (
     <>
-      <div className="flex min-h-full flex-col justify-center px-6 py-8 lg:px-8">
-        <hr className="sm:mx-auto sm:w-full sm:max-w-sm my-4 h-px border-0 bg-gray-400" />
+      <div className="flex min-h-full flex-col justify-center pt-8 px-6 lg:px-8">
+        <Divider />
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <div className="rounded-lg border-none p-4">
             <h3 className="text-base font-semibold leading-6 dark:text-black">

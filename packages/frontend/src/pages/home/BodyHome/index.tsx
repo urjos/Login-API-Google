@@ -1,4 +1,4 @@
-import Gallery from "../../../components/layouts/Gallery";
+import Gallery from "../../../components/layouts/Others/Gallery";
 
 export type LogoutProps = {
   onLogout: () => void;

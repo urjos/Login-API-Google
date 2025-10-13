@@ -1,7 +1,7 @@
 import { Footer } from "../../components/layouts/AppLayout/Footer";
 import { Header } from "../../components/layouts/AppLayout/Header";
 import { useSession } from "../../contexts/SessionContext";
-import { Body } from "./body";
+import { Body } from "./BodyHome";
 
 const HomePage = () => {
   const { clearSession } = useSession();

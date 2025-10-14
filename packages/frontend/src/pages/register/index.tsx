@@ -47,20 +47,24 @@ export const RegisterForm = () => {
     }
 
     try {
-      const response = await api.post("/users", {
+      // 1. Registrar el usuario
+      await api.post("/users", {
         name: `${formData.name} ${formData.lastName}`,
         email: formData.email,
         password: formData.password,
         country: formData.country,
       });
 
+      // 2. Iniciar sesión automáticamente para obtener un token real
+      const loginResponse = await api.post("/auth/login", {
+        email: formData.email,
+        password: formData.password,
+      });
+
+      // 3. Establecer la sesión con los datos correctos del backend
       setSession({
-        name: response.data.name,
-        email: response.data.email,
-        userId: response.data.id,
-        username: formData.name, // O podrías usar el nombre completo
-        country: response.data.country,
-        token: "fake-jwt-token-after-register", // El backend debería generar y devolver esto
+        ...loginResponse.data,
+        userId: loginResponse.data.id, // Aseguramos que userId esté presente
       });
 
       navigate("/");
@@ -95,7 +99,7 @@ export const RegisterForm = () => {
           {error && (
             <ErrorMessage message={error} onClose={() => setError(null)} />
           )}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-0 md:gap-5 lg:gap-5">
             <div className="mt-2">
               <label
                 htmlFor="name"
@@ -135,8 +139,8 @@ export const RegisterForm = () => {
               />
             </div>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-            <div className="mt-2 col-span-2">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-0 lg:gap-5">
+            <div className="mt-2 lg:col-span-2">
               <label
                 htmlFor="email"
                 className="block text-sm/6 font-medium text-gray-900"
@@ -185,7 +189,7 @@ export const RegisterForm = () => {
           </div>
 
           <div>
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between mt-2">
               <label
                 htmlFor="password"
                 className="block text-sm/6 font-medium text-gray-900"
@@ -194,7 +198,7 @@ export const RegisterForm = () => {
               </label>
               <div className="text-sm"></div>
             </div>
-            <div className="mt-2">
+            <div>
               <input
                 id="password"
                 name="password"
@@ -210,7 +214,7 @@ export const RegisterForm = () => {
           </div>
 
           <div>
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between mt-2">
               <label
                 htmlFor="confirm_password"
                 className="block text-sm/6 font-medium text-gray-900"
@@ -219,7 +223,7 @@ export const RegisterForm = () => {
               </label>
               <div className="text-sm"></div>
             </div>
-            <div className="mt-2">
+            <div>
               <input
                 id="confirm_password"
                 name="confirm_password"

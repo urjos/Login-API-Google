@@ -5,7 +5,19 @@ import { OAuth2Client } from "google-auth-library";
 import { pool } from "../../db.js";
 config();
 
-const client = new OAuth2Client(process.env.VITE_GOOGLE_CLIENT_ID);
+const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+const createAuthResponse = (user, token, message) => {
+  return {
+    message,
+    id: user.id,
+    name: user.name,
+    email: user.email,
+    country: user.country,
+    picture: user.picture,
+    auth_provider: user.auth_provider,
+    token,
+  };
+};
 
 export const getUsers = async (req, res) => {
   const [rows] = await pool.query("SELECT * FROM users");
@@ -36,8 +48,14 @@ export const loginUser = async (req, res) => {
     if (rows.length === 0) {
       return res.status(401).json({ message: "El email no está registrado" });
     }
-
     const user = rows[0];
+
+    if (user.auth_provider === "google") {
+      return res.status(409).json({
+        message:
+          "Este email está registrado con Google. Por favor, inicia sesión con Google.",
+      });
+    }
 
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
@@ -45,23 +63,13 @@ export const loginUser = async (req, res) => {
     }
 
     const payload = { id: user.id, name: user.name };
-    const token = jwt.sign(
-      payload,
-      process.env.JWT_SECRET || "fallback_secret",
-      {
-        expiresIn: "1h",
-      }
-    );
-
-    res.json({
-      message: "Login exitoso",
-      id: user.id,
-      name: user.name,
-      email: user.email,
-      country: user.country,
-      token,
+    const token = jwt.sign(payload, process.env.JWT_SECRET, {
+      expiresIn: "1h",
     });
+
+    res.json(createAuthResponse(user, token, "Login exitoso"));
   } catch (error) {
+    console.error("Error en loginUser:", error);
     return res.status(500).json({ message: "Error interno del servidor" });
   }
 };
@@ -72,7 +80,7 @@ export const googleLogin = async (req, res) => {
 
     const ticket = await client.verifyIdToken({
       idToken: token,
-      audience: process.env.VITE_GOOGLE_CLIENT_ID,
+      audience: process.env.GOOGLE_CLIENT_ID,
     });
     const { name, email, sub: googleId, locale, picture } = ticket.getPayload();
 
@@ -114,21 +122,11 @@ export const googleLogin = async (req, res) => {
       }
     }
     const appTokenPayload = { id: user.id, name: user.name };
-    const appToken = jwt.sign(
-      appTokenPayload,
-      process.env.JWT_SECRET || "fallback_secret",
-      { expiresIn: "1h" }
-    );
-
-    res.json({
-      message: "Login con Google exitoso",
-      id: user.id,
-      name: user.name,
-      email: user.email,
-      country: user.country,
-      picture: user.picture,
-      token: appToken,
+    const appToken = jwt.sign(appTokenPayload, process.env.JWT_SECRET, {
+      expiresIn: "1h",
     });
+
+    res.json(createAuthResponse(user, appToken, "Login con Google exitoso"));
   } catch (error) {
     console.error("Error en Google Login:", error);
     return res
@@ -145,7 +143,7 @@ export const createUser = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, salt);
 
     const [result] = await pool.query(
-      "INSERT INTO users (name, email, password, country) VALUES (?, ?, ?, ?)",
+      "INSERT INTO users (name, email, password, country, auth_provider) VALUES (?, ?, ?, ?, 'local')",
       [name, email, hashedPassword, country]
     );
     return res.status(201).json({
@@ -158,6 +156,7 @@ export const createUser = async (req, res) => {
     if (error.code === "ER_DUP_ENTRY") {
       return res.status(409).json({ message: "El email ya está registrado." });
     }
+    console.error("Error en createUser:", error);
     res.status(500).json({ message: "Error interno del servidor" });
   }
 };
@@ -166,7 +165,7 @@ export const deleteUser = async (req, res) => {
   const { id } = req.params;
   const [result] = await pool.query("DELETE FROM users WHERE id = ?", [id]);
 
-  if (result[0].affectedRows === 0) {
+  if (result.affectedRows === 0) {
     return res.status(404).json({ message: "User not found" });
   } else {
     return res.status(204).json({ message: "User deleted successfully" });
@@ -189,8 +188,7 @@ export const updateUser = async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
     const [rows] = await pool.query(
-      "SELECT id, name, email, country FROM users WHERE id = ?",
-      "SELECT id, name, email, country, picture FROM users WHERE id = ?",
+      "SELECT id, name, email, country, picture, auth_provider FROM users WHERE id = ?",
       [id]
     );
     return res.json(rows[0]);

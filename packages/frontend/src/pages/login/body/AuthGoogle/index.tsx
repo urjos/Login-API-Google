@@ -48,6 +48,7 @@ export function AuthGoogle() {
         email: response.data.email,
         country: response.data.country,
         token: response.data.token,
+        auth_provider: response.data.auth_provider,
       });
     } catch (err: any) {
       setError(

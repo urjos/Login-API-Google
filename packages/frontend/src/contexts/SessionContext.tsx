@@ -16,6 +16,7 @@ export type Session = {
   picture?: string;
   username?: string;
   token: string;
+  auth_provider: string;
 };
 
 type SessionContextType = {

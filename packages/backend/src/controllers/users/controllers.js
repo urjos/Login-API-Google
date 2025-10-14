@@ -1,8 +1,11 @@
 import bcrypt from "bcryptjs";
 import { config } from "dotenv";
 import jwt from "jsonwebtoken";
+import { OAuth2Client } from "google-auth-library";
 import { pool } from "../../db.js";
 config();
+
+const client = new OAuth2Client(process.env.VITE_GOOGLE_CLIENT_ID);
 
 export const getUsers = async (req, res) => {
   const [rows] = await pool.query("SELECT * FROM users");
@@ -60,6 +63,77 @@ export const loginUser = async (req, res) => {
     });
   } catch (error) {
     return res.status(500).json({ message: "Error interno del servidor" });
+  }
+};
+
+export const googleLogin = async (req, res) => {
+  try {
+    const { token } = req.body;
+
+    const ticket = await client.verifyIdToken({
+      idToken: token,
+      audience: process.env.VITE_GOOGLE_CLIENT_ID,
+    });
+    const { name, email, sub: googleId, locale, picture } = ticket.getPayload();
+
+    const [rows] = await pool.query("SELECT * FROM users WHERE email = ?", [
+      email,
+    ]);
+    let user = rows[0];
+
+    if (!user) {
+      const [result] = await pool.query(
+        "INSERT INTO users (name, email, google_id, country, auth_provider, picture) VALUES (?, ?, ?, ?, ?, ?)",
+        [
+          name,
+          email,
+          googleId,
+          locale ? locale.toUpperCase().split("-")[0] : null,
+          "google",
+          picture,
+        ]
+      );
+      const [newUserRows] = await pool.query(
+        "SELECT * FROM users WHERE id = ?",
+        [result.insertId]
+      );
+      user = newUserRows[0];
+    } else {
+      if (user.auth_provider === "local") {
+        return res.status(409).json({
+          message:
+            "Este email ya está registrado con una contraseña. Por favor, inicia sesión de forma tradicional.",
+        });
+      }
+      if (user.picture !== picture) {
+        await pool.query("UPDATE users SET picture = ? WHERE id = ?", [
+          picture,
+          user.id,
+        ]);
+        user.picture = picture;
+      }
+    }
+    const appTokenPayload = { id: user.id, name: user.name };
+    const appToken = jwt.sign(
+      appTokenPayload,
+      process.env.JWT_SECRET || "fallback_secret",
+      { expiresIn: "1h" }
+    );
+
+    res.json({
+      message: "Login con Google exitoso",
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      country: user.country,
+      picture: user.picture,
+      token: appToken,
+    });
+  } catch (error) {
+    console.error("Error en Google Login:", error);
+    return res
+      .status(401)
+      .json({ message: "Autenticación con Google fallida" });
   }
 };
 

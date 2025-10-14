@@ -1,7 +1,8 @@
 import { useSession } from "../../../../contexts/SessionContext";
 import { GoogleLogin, type CredentialResponse } from "@react-oauth/google";
-import { jwtDecode } from "jwt-decode";
 import { useNavigate } from "react-router-dom";
+import { api } from "../../../../services/api";
+import { use, useState } from "react";
 
 export type UserData = {
   iss: string;
@@ -22,24 +23,36 @@ export type UserData = {
 
 export function AuthGoogle() {
   const { session, setSession, clearSession } = useSession();
+  const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
 
   if (session) navigate("/");
+  const handleLoginSuccess = async (credentialResponse: CredentialResponse) => {
+    setError(null);
+    if (!credentialResponse.credential) {
+      setError("No se recibió la credencial de Google.");
+      return;
+    }
 
-  const handleLoginSuccess = (credentialResponse: CredentialResponse) => {
-    if (credentialResponse.credential) {
-      const decodedData = jwtDecode<UserData>(credentialResponse.credential);
-      // console.log(decodedData.name);
+    try {
+      // Envía el token de Google a tu backend
+      const response = await api.post("/auth/google/login", {
+        token: credentialResponse.credential,
+      });
 
       setSession({
-        name: decodedData.name,
-        email: decodedData.email,
-        picture: decodedData.picture,
-        userId: decodedData.sub,
-        username: decodedData.given_name,
-        token: credentialResponse.credential,
-        country: decodedData.locale,
+        userId: response.data.id,
+        picture: response.data.picture,
+        username: response.data.username,
+        name: response.data.name,
+        email: response.data.email,
+        country: response.data.country,
+        token: response.data.token,
       });
+    } catch (err: any) {
+      setError(
+        err.response?.data?.message || "Error al iniciar sesión con Google."
+      );
     }
   };
 
@@ -49,6 +62,9 @@ export function AuthGoogle() {
 
   return (
     <div className="flex flex-col items-center">
+      {error && (
+        <p className="text-red-500 text-sm mb-2 text-center">{error}</p>
+      )}
       <div className="transition delay-100 duration-200 ease-in-out  hover:scale-98 cursor-pointer">
         <GoogleLogin
           onSuccess={handleLoginSuccess}

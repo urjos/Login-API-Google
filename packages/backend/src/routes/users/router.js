@@ -6,6 +6,7 @@ import {
   getUsers,
   updateUser,
   loginUser,
+  googleLogin,
 } from "../../controllers/users/controllers.js";
 
 const router = Router();
@@ -13,6 +14,8 @@ const router = Router();
 router.get("/users", getUsers);
 
 router.post("/auth/login", loginUser);
+
+router.post("/auth/google/login", googleLogin);
 
 router.get("/users/:id", getUser);
 

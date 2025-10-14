@@ -29,7 +29,6 @@ const LoginForm = () => {
 
     try {
       const response = await api.post("/auth/login", formData);
-      console.log(response);
 
       setSession({
         userId: response.data.id,

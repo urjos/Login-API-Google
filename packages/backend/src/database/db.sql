@@ -13,5 +13,6 @@ CREATE TABLE IF NOT EXISTS users (
   country VARCHAR(100) NULL,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
   auth_provider VARCHAR(50) NOT NULL DEFAULT 'local', 
-  google_id VARCHAR(255) NULL UNIQUE
+  google_id VARCHAR(255) NULL , 
+  picture VARCHAR(255) NULL
 );

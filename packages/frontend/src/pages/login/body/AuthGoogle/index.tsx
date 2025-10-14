@@ -2,7 +2,7 @@ import { useSession } from "../../../../contexts/SessionContext";
 import { GoogleLogin, type CredentialResponse } from "@react-oauth/google";
 import { useNavigate } from "react-router-dom";
 import { api } from "../../../../services/api";
-import { use, useState } from "react";
+import { useState } from "react";
 
 export type UserData = {
   iss: string;

@@ -190,10 +190,12 @@ export const updateUser = async (req, res) => {
     }
     const [rows] = await pool.query(
       "SELECT id, name, email, country FROM users WHERE id = ?",
+      "SELECT id, name, email, country, picture FROM users WHERE id = ?",
       [id]
     );
     return res.json(rows[0]);
   } catch (error) {
+    console.error("Error en updateUser:", error);
     return res.status(500).json({ message: "Error interno del servidor" });
   }
 };

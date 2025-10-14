@@ -187,17 +187,27 @@ Si te interesa colaborar:
 
 ---
 
-## Login - view
+## Login - View
+<img width="1365" height="600" alt="image" src="https://github.com/user-attachments/assets/9f2ffb2c-fb2d-47d2-a548-7fd1be481d34" />
 
-<img width="1365" height="598" alt="image" src="https://github.com/user-attachments/assets/ac71f377-b6cf-419a-9e69-8aa7a0cf737a" />
 
-## Home - view
+### Sign in - View
+<img width="1365" height="598" alt="image" src="https://github.com/user-attachments/assets/8777bf70-50c5-4fad-ad32-c659a74941c2" />
 
-<img width="1365" height="600" alt="image" src="https://github.com/user-attachments/assets/32f19eeb-af28-4959-9bce-ae652652cd5d" />
+
+## Home - View
+<img width="1365" height="600" alt="image" src="https://github.com/user-attachments/assets/0489d292-ff3b-48b3-8c73-65bb5509513f" />
+
+### Profile - View (Google Auth)
+<img width="1365" height="410" alt="image" src="https://github.com/user-attachments/assets/381f534f-e2b5-4f04-9cc0-8504243ede91" />
+
+### Profile - View (Local)
+<img width="1107" height="599" alt="image" src="https://github.com/user-attachments/assets/b159b30b-7911-41ce-86e9-a83ed76f41b0" />
+
 
 ## 📄 Licencia
 
-Este proyecto se distribuye bajo la licencia **MIT** (o la que prefieras).
+Este proyecto se distribuye bajo la licencia **MIT** 
 
 ---
 

@@ -1,9 +1,8 @@
 import { useState, type FormEvent } from "react";
 import { useSession } from "../../../../contexts/SessionContext";
 import { api } from "../../../../services/api";
-import ErrorMessage from "../../../../components/layouts/Notifications/Error";
-import SuccessMessage from "../../../../components/layouts/Notifications/Success";
 import { Divider } from "../../../../components/layouts/Others/Divider";
+import Notification from "../../../../components/layouts/Notifications/Notification";
 
 export const ProfileBody = () => {
   const { session, setSession } = useSession();
@@ -80,12 +79,17 @@ export const ProfileBody = () => {
         <div className="flex min-h-full flex-col justify-center pt-8 px-6 lg:px-0 md:px-0">
           <Divider />
           {error && (
-            <ErrorMessage message={error} onClose={() => setError(null)} />
+            <Notification
+              message={error}
+              onClose={() => setError(null)}
+              variant="error"
+            />
           )}
           {success && (
-            <SuccessMessage
+            <Notification
               message={success}
               onClose={() => setSuccess(null)}
+              variant="success"
             />
           )}
           <form onSubmit={handleSubmit}>

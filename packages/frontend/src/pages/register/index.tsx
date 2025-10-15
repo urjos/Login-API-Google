@@ -1,27 +1,26 @@
-import { useState, type FormEvent } from "react";
+import { type FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSession } from "../../contexts/SessionContext";
 import { api } from "../../services/api/index";
-import ErrorMessage from "../../components/layouts/Notifications/Error/index";
+import { useAuthForm } from "../../hooks/AuthForm";
+import Notification from "../../components/layouts/Notifications/Notification";
 
 export const RegisterForm = () => {
   const { session, setSession } = useSession();
   const navigate = useNavigate();
-  const [formData, setFormData] = useState({
-    name: "",
-    lastName: "",
-    email: "",
-    country: "",
-    password: "",
-    confirm_password: "",
-  });
-  const [error, setError] = useState<string | null>(null);
+  const { formData, error, setError, isLoading, setIsLoading, handleChange } =
+    useAuthForm({
+      email: "",
+      password: "",
+    });
 
   if (session) navigate("/");
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError(null);
+    setIsLoading(true);
+
     const { name, lastName, email, country, password, confirm_password } =
       formData;
     if (
@@ -47,7 +46,6 @@ export const RegisterForm = () => {
     }
 
     try {
-      // 1. Registrar el usuario
       await api.post("/users", {
         name: `${formData.name} ${formData.lastName}`,
         email: formData.email,
@@ -55,13 +53,11 @@ export const RegisterForm = () => {
         country: formData.country,
       });
 
-      // 2. Iniciar sesión automáticamente para obtener un token real
       const loginResponse = await api.post("/auth/login", {
         email: formData.email,
         password: formData.password,
       });
 
-      // 3. Establecer la sesión con los datos correctos del backend
       setSession({
         ...loginResponse.data,
         userId: loginResponse.data.id, // Aseguramos que userId esté presente
@@ -71,14 +67,9 @@ export const RegisterForm = () => {
     } catch (err: any) {
       console.error("Error during registration:", err);
       setError(err.response?.data?.message || "Ocurrió un error inesperado.");
+    } finally {
+      setIsLoading(false);
     }
-  };
-
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   return (
@@ -97,7 +88,11 @@ export const RegisterForm = () => {
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm ">
         <form onSubmit={handleSubmit}>
           {error && (
-            <ErrorMessage message={error} onClose={() => setError(null)} />
+            <Notification
+              message={error}
+              onClose={() => setError(null)}
+              variant={"error"}
+            />
           )}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-0 md:gap-5 lg:gap-5">
             <div className="mt-2">

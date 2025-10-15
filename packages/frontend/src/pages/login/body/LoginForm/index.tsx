@@ -2,7 +2,8 @@ import { useState, type FormEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useSession } from "../../../../contexts/SessionContext";
 import { api } from "../../../../services/api";
-import ErrorMessage from "../../../../components/layouts/Notifications/Error";
+import { useAuthForm } from "../../../../hooks/AuthForm";
+import Notification from "../../../../components/layouts/Notifications/Notification";
 
 const EMAIL_ERROR_MESSAGE = "El email no está registrado";
 const PASSWORD_ERROR_MESSAGE = "Contraseña incorrecta";
@@ -10,26 +11,20 @@ const PASSWORD_ERROR_MESSAGE = "Contraseña incorrecta";
 const LoginForm = () => {
   const { session, setSession } = useSession();
   const navigate = useNavigate();
-  const [error, setError] = useState<string | null>(null);
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
+  const { formData, error, setError, isLoading, setIsLoading, handleChange } =
+    useAuthForm({
+      email: "",
+      password: "",
+    });
 
   if (session) navigate("/");
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError(null);
-
+    setIsLoading(true);
     try {
       const response = await api.post("/auth/login", formData);
-
       setSession({
         userId: response.data.id,
         name: response.data.name,
@@ -38,7 +33,6 @@ const LoginForm = () => {
         token: response.data.token,
         auth_provider: response.data.auth_provider,
       });
-
       navigate("/");
     } catch (err: any) {
       setError(
@@ -46,6 +40,8 @@ const LoginForm = () => {
           EMAIL_ERROR_MESSAGE ||
           PASSWORD_ERROR_MESSAGE
       );
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -64,7 +60,11 @@ const LoginForm = () => {
 
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
         {error && (
-          <ErrorMessage message={error} onClose={() => setError(null)} />
+          <Notification
+            message={error}
+            onClose={() => setError(null)}
+            variant="error"
+          />
         )}
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>

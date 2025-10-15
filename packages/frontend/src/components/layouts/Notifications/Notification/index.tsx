@@ -1,27 +1,44 @@
 import { useEffect } from "react";
 
-export type SuccessMessageProps = {
+type NotificationProps = {
   message: string | null;
   onClose: () => void;
+  variant: "success" | "error";
 };
 
-export default function SuccessMessage({
+const variants = {
+  success: {
+    bg: "bg-green-50",
+    text: "text-green-800",
+    ring: "focus:ring-green-400",
+    hover: "hover:bg-green-200",
+  },
+  error: {
+    bg: "bg-red-50",
+    text: "text-red-800",
+    ring: "focus:ring-red-400",
+    hover: "hover:bg-red-200",
+  },
+};
+
+export default function Notification({
   message,
   onClose,
-}: SuccessMessageProps) {
+  variant,
+}: NotificationProps) {
   if (!message) return null;
-  /*useEffect(() => {
-    if (message) {
-      const timer = setTimeout(() => {
-        onClose();
-      }, 2000);
-      return () => clearTimeout(timer);
-    }
-  }, [message, onClose]);*/
+
+  useEffect(() => {
+    const timer = setTimeout(() => onClose(), 3000);
+    return () => clearTimeout(timer);
+  }, [message, onClose]);
+
+  const style = variants[variant];
+
   return (
     <div
       id="alert-2"
-      className="flex items-center p-2 text-green-800 rounded-lg bg-green-50"
+      className={`flex items-center p-2 ${style.text} rounded-lg ${style.bg}`}
       role="alert"
     >
       <svg
@@ -38,8 +55,8 @@ export default function SuccessMessage({
 
       <button
         type="button"
-        className="ms-auto -mx-1.5 -my-1.5 bg-green-50 text-green-500 rounded-lg focus:ring-2 
-        transition easy-in-out duration-150 focus:ring-green-400 p-1.5 hover:bg-green-200 inline-flex items-center justify-center h-8 w-8"
+        className={`ms-auto -mx-1.5 -my-1.5 ${style.bg} ${style.text} rounded-lg focus:ring-2 
+        transition easy-in-out duration-150 ${style.ring} p-1.5 ${style.hover} inline-flex items-center justify-center h-8 w-8`}
         aria-label="Close"
         onClick={onClose}
       >

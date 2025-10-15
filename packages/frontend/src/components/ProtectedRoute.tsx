@@ -1,12 +1,8 @@
 import { Navigate, Outlet } from "react-router-dom";
-import { useSession } from "../contexts/SessionContext";
+import { useSessionStore } from "../entities/store/SessionStore";
 
 export function ProtectedRoute() {
-  const { session, isLoading } = useSession();
-
-  if (isLoading) {
-    return <div>Loading session...</div>;
-  }
+  const { session } = useSessionStore();
 
   if (!session) {
     return <Navigate to="/login" replace />;

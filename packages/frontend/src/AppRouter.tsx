@@ -1,10 +1,10 @@
-import { createBrowserRouter } from "react-router-dom";
 import App from "./App";
-import HomePage from "./pages/home";
-import LoginPage from "./pages/login";
+import { createBrowserRouter } from "react-router-dom";
 import { ProtectedRoute } from "./components/ProtectedRoute";
-import { RegisterForm } from "./pages/register";
-import { Profile } from "./pages/profile";
+import { Profile } from "./pages/profile/Profile";
+import HomePage from "./pages/home/Home";
+import LoginPage from "./pages/login/Login";
+import { Register } from "./pages/register/Register";
 
 const routes = createBrowserRouter([
   {
@@ -24,7 +24,7 @@ const routes = createBrowserRouter([
       },
       {
         path: "register",
-        element: <RegisterForm />,
+        element: <Register />,
       },
     ],
   },

@@ -76,19 +76,19 @@ export const ProfileBody = () => {
 
   return (
     <>
-      <div className="flex min-h-full flex-col justify-center pt-8 px-6 lg:px-8">
-        <Divider />
-        <div className="sm:mx-auto sm:w-full sm:max-w-sm ">
+      <div className="sm:mx-auto sm:w-full sm:max-w-sm">
+        <div className="flex min-h-full flex-col justify-center pt-8 px-6 lg:px-0 md:px-0">
+          <Divider />
+          {error && (
+            <ErrorMessage message={error} onClose={() => setError(null)} />
+          )}
+          {success && (
+            <SuccessMessage
+              message={success}
+              onClose={() => setSuccess(null)}
+            />
+          )}
           <form onSubmit={handleSubmit}>
-            {error && (
-              <ErrorMessage message={error} onClose={() => setError(null)} />
-            )}
-            {success && (
-              <SuccessMessage
-                message={success}
-                onClose={() => setSuccess(null)}
-              />
-            )}
             <div className="grid grid-cols-1 md:grid-cols-1 gap-5">
               <div className="mt-2">
                 <label

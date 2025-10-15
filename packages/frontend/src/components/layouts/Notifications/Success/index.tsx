@@ -10,14 +10,14 @@ export default function SuccessMessage({
   onClose,
 }: SuccessMessageProps) {
   if (!message) return null;
-  useEffect(() => {
+  /*useEffect(() => {
     if (message) {
       const timer = setTimeout(() => {
         onClose();
       }, 2000);
       return () => clearTimeout(timer);
     }
-  }, [message, onClose]);
+  }, [message, onClose]);*/
   return (
     <div
       id="alert-2"

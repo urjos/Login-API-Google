@@ -19,7 +19,7 @@ export default function ErrorMessage({ message, onClose }: ErrorMessageProps) {
   return (
     <div
       id="alert-2"
-      className="flex items-center p-2 mb-4 text-red-800 rounded-lg bg-red-50"
+      className="flex items-center p-2 text-red-800 rounded-lg bg-red-50"
       role="alert"
     >
       <svg

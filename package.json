@@ -2,7 +2,8 @@
   "name": "api-google",
   "private": "true",
   "scripts": {
-    "dev": "pnpm --parallel --filter ./packages/* run dev"
+    "dev": "pnpm --parallel --filter ./packages/* run dev",
+    "seed": "pnpm --parallel --filter ./packages/* run seed"
   },
   "author": "",
   "license": "ISC",

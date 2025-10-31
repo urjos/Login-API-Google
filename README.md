@@ -64,7 +64,13 @@ Antes de correr la aplicación, asegúrate de tener lo siguiente instalado:
 
 4. Configura las variables de entorno (ver sección siguiente).
 
-5. Arranca el servidor en modo desarrollo:
+5. Sembramos la base de datos (Previamente prendemos XAMPP):
+
+   ```bash
+   npm seed// pnpm seed
+   ```
+
+6. Arranca el servidor en modo desarrollo:
 
    ```bash
    npm run dev // pnpm run dev

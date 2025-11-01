@@ -13,6 +13,6 @@ export const pool = mysql.createPool({
 });
 
 // Prueba de conexión a la DB
-/*pool.query("SELECT * FROM users").then((result) => {
+/* pool.query("SELECT * FROM users").then((result) => {
   console.log(result);
-});*/
+}); */

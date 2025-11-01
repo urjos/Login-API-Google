@@ -1,5 +1,3 @@
-// packages/backend/src/seed.js
-
 import fs from "fs/promises";
 import mysql from "mysql2/promise";
 import path from "path";

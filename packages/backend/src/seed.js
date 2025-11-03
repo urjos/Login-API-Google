@@ -3,7 +3,7 @@ import mysql from "mysql2/promise";
 import path from "path";
 import { fileURLToPath } from "url";
 
-import { DB_HOST, DB_PASSWORD, DB_PORT, DB_USER } from "./config.js";
+import { DB_HOST, DB_NAME, DB_PASSWORD, DB_PORT, DB_USER } from "./config.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -21,6 +21,11 @@ async function runSeed() {
     });
 
     console.log("Connected successfully.");
+
+    console.log(`Creating database '${DB_NAME}' if it doesn't exist...`);
+    await connection.query(`CREATE DATABASE IF NOT EXISTS \`${DB_NAME}\`;`);
+    await connection.query(`USE \`${DB_NAME}\`;`);
+    console.log(`Database '${DB_NAME}' is ready.`);
 
     console.log("Reading db.sql file...");
     const sqlFilePath = path.join(__dirname, "database", "db.sql");

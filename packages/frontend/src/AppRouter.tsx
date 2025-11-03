@@ -5,6 +5,7 @@ import { Profile } from "./pages/profile/Profile";
 import HomePage from "./pages/home/Home";
 import LoginPage from "./pages/login/Login";
 import { Register } from "./pages/register/Register";
+import { ForgotPasswordForm } from "./features/auth/ui/login/ForgotPassword";
 
 const routes = createBrowserRouter([
   {
@@ -25,6 +26,10 @@ const routes = createBrowserRouter([
       {
         path: "register",
         element: <Register />,
+      },
+      {
+        path: "forgot-password",
+        element: <ForgotPasswordForm />,
       },
     ],
   },

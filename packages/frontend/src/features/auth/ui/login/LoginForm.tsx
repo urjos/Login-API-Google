@@ -68,17 +68,12 @@ const LoginForm = () => {
         )}
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
-            <label
-              htmlFor="email"
-              className="block text-sm/6 font-medium text-gray-900"
-            >
-              Email address
-            </label>
             <div className="mt-2">
               <input
                 id="email"
                 name="email"
                 type="email"
+                placeholder="Email address"
                 required
                 value={formData.email}
                 onChange={handleChange}
@@ -93,16 +88,10 @@ const LoginForm = () => {
           </div>
 
           <div>
-            <div className="flex items-center justify-between">
-              <label
-                htmlFor="password"
-                className="block text-sm/6 font-medium text-gray-900"
-              >
-                Password
-              </label>
+            <div className="flex items-center justify-end">
               <div className="text-sm">
                 <a
-                  href="#"
+                  href="/forgot-password"
                   className="font-semibold text-indigo-600 hover:text-indigo-500"
                 >
                   Forgot password?
@@ -114,6 +103,7 @@ const LoginForm = () => {
                 id="password"
                 name="password"
                 type="password"
+                placeholder="Password"
                 required
                 value={formData.password}
                 onChange={handleChange}

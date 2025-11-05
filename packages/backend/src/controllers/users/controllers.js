@@ -3,9 +3,11 @@ import { config } from "dotenv";
 import jwt from "jsonwebtoken";
 import { OAuth2Client } from "google-auth-library";
 import { pool } from "../../db.js";
+import crypto from "crypto";
 config();
 
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+
 const createAuthResponse = (user, token, message) => {
   return {
     message,
@@ -17,6 +19,47 @@ const createAuthResponse = (user, token, message) => {
     auth_provider: user.auth_provider,
     token,
   };
+};
+
+export const requestPasswordReset = async (req, res) => {
+  try {
+    const { email } = req.body;
+
+    const [rows] = await pool.query("SELECT * FROM users WHERE email = ?", [
+      email,
+    ]);
+    const user = rows[0];
+
+    if (rows.length === 0) {
+      return res.status(404).json({ message: "El email no está registrado" });
+    }
+
+    if (user.auth_provider === "google") {
+      return res.status(400).json({
+        message:
+          "Esta cuenta está registrada con Google. Inicia sesión con Google.",
+      });
+    }
+
+    const resetToken = crypto.randomBytes(32).toString("hex");
+    const expires = new Date(Date.now() + 3600000);
+    await pool.query(
+      "UPDATE users SET reset_token = ?, reset_token_expires = ? WHERE email = ?",
+      [resetToken, expires, email]
+    );
+
+    console.log("Código de reseteo generado para:", email);
+    return res.json({ message: "Se ha enviado un código a tu email." });
+  } catch (error) {
+    console.error("Error en requestPasswordReset:", error);
+    if (error.code === "ECONNREFUSED") {
+      return res.status(500).json({
+        message:
+          "Error interno al conectar con el servicio de email. Inténtalo más tarde.",
+      });
+    }
+    return res.status(500).json({ message: "Error interno del servidor" });
+  }
 };
 
 export const getUsers = async (req, res) => {

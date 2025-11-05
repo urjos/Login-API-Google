@@ -1,7 +1,7 @@
 import axios from "axios";
 import type { Session } from "./session";
 
-const API_URL = "http://localhost:4000/api"; // <-- ¡Ajusta esto a la URL de tu backend!
+const API_URL = "http://localhost:4000/api";
 
 export const api = axios.create({
   baseURL: API_URL,

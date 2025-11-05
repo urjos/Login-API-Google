@@ -24,13 +24,11 @@ export const ForgotPasswordForm = () => {
     setIsLoading(true);
 
     try {
-      // 1. Llamamos al endpoint del backend (que necesitarás crear)
-      // (Ej: /api/auth/request-password-reset)
-      await api.post("/auth/request-password-reset", { email: formData.email });
+      const response = await api.post("/auth/request-password-reset", {
+        email: formData.email,
+      });
 
-      setSuccess(
-        "¡Hecho! Si este email está registrado, recibirás un código de reseteo."
-      );
+      setSuccess(response.data.message);
     } catch (err: any) {
       setError(
         err.response?.data?.message || "Ocurrió un error al enviar el email."

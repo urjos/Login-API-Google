@@ -7,6 +7,7 @@ import {
   updateUser,
   loginUser,
   googleLogin,
+  requestPasswordReset,
 } from "../../controllers/users/controllers.js";
 
 const router = Router();
@@ -16,6 +17,8 @@ router.get("/users", getUsers);
 router.post("/auth/login", loginUser);
 
 router.post("/auth/google/login", googleLogin);
+
+router.post("/auth/request-password-reset", requestPasswordReset);
 
 router.get("/users/:id", getUser);
 

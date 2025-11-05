@@ -12,7 +12,6 @@ app.use(morgan("dev"));
 app.use(express.json());
 
 // Rutas
-// Es una buena práctica añadir un prefijo como /api a tus rutas
 app.use("/api", userRoutes);
 
 app.listen(PORT);

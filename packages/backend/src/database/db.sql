@@ -7,5 +7,7 @@ CREATE TABLE IF NOT EXISTS users (
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
   auth_provider VARCHAR(50) NOT NULL DEFAULT 'local', 
   google_id VARCHAR(255) NULL , 
-  picture VARCHAR(255) NULL
+  picture VARCHAR(255) NULL,
+  reset_token VARCHAR(255) NULL,
+  reset_token_expires TIMESTAMP NULL
 );
